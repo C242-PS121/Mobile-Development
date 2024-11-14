@@ -14,6 +14,16 @@
         tools:ignore="PrivateResource" />
 
     <item
+        android:id="@+id/navigation_favorite"
+        android:icon="@drawable/ic_favorite_black_24"
+        android:title="@string/favorite" />
+
+    <item
+        android:id="@+id/navigation_checkout"
+        android:icon="@drawable/ic_cart_black_24"
+        android:title="@string/checkout" />
+
+    <item
         android:id="@+id/navigation_account"
         android:icon="@drawable/ic_person_black_24"
         android:title="@string/account" />
