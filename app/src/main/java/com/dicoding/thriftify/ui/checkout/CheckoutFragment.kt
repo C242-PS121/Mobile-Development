@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.dicoding.thriftify.databinding.FragmentCheckoutBinding
 
 
-
 class CheckoutFragment : Fragment() {
     private var _binding: FragmentCheckoutBinding? = null
 
