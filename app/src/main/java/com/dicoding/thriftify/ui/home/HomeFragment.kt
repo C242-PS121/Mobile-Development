@@ -44,17 +44,17 @@ class HomeFragment : Fragment() {
         return root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.logoutButton.setOnClickListener {
-            mainViewModel.logout()
-            val intent = Intent(requireActivity(), WelcomeActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(intent)
-            requireActivity().finish()
-        }
-    }
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//
+//        binding.logoutButton.setOnClickListener {
+//            mainViewModel.logout()
+//            val intent = Intent(requireActivity(), WelcomeActivity::class.java)
+//            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+//            startActivity(intent)
+//            requireActivity().finish()
+//        }
+//    }
 
     override fun onDestroyView() {
         super.onDestroyView()

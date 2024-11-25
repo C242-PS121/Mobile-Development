@@ -39,4 +39,5 @@
     <string name="continue_button">Continue</string>
     <string name="registration_success_title">Registration Successful!</string>
     <string name="registration_success_message">Account with email %1$s has been created. Please login.</string>
+
 </resources>
