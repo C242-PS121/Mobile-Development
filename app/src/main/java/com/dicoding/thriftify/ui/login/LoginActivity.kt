@@ -8,17 +8,16 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.dicoding.thriftify.R
 import com.dicoding.thriftify.data.pref.UserModel
 import com.dicoding.thriftify.databinding.ActivityLoginBinding
 import com.dicoding.thriftify.ui.main.MainActivity
 import com.dicoding.thriftify.utils.ViewModelFactory
+import com.dicoding.thriftify.data.Result
+import com.dicoding.thriftify.data.remote.request.LoginRequest
 
 class LoginActivity : AppCompatActivity() {
     private val viewModel by viewModels<LoginViewModel> {
@@ -52,19 +51,54 @@ class LoginActivity : AppCompatActivity() {
     private fun setupAction() {
         binding.loginButton.setOnClickListener {
             val email = binding.edLoginEmail.text.toString()
-            viewModel.saveSession(UserModel(email, "sample_token"))
-            AlertDialog.Builder(this).apply {
-                setTitle(getString(R.string.success_title))
-                setMessage(getString(R.string.login_success_message))
-                setPositiveButton(getString(R.string.continue_button)) { _, _ ->
-                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                    startActivity(intent)
-                    finish()
+            val password = binding.edLoginPassword.text.toString()
+
+            val loginRequest = LoginRequest(email, password)
+            viewModel.login(loginRequest)
+            viewModel.loginResponse.observe(this) { result ->
+                when (result) {
+                    is Result.Loading -> {
+                        showLoading(true)
+                    }
+                    is Result.Success -> {
+                        showLoading(false)
+                        val user = UserModel(
+                            email,
+                            result.data.data.accessToken,
+                            result.data.data.refreshToken,
+                            true
+                        )
+                        viewModel.saveSession(user)
+                        AlertDialog.Builder(this).apply {
+                            setTitle(getString(R.string.success_title))
+                            setMessage(getString(R.string.login_success_message))
+                            setPositiveButton(getString(R.string.continue_button)) { _, _ ->
+                                val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                                intent.flags =
+                                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                startActivity(intent)
+                                finish()
+                            }
+                            create()
+                            show()
+                        }
+                    }
+                    is Result.Error -> {
+                        showLoading(false)
+                        showError(result)
+                    }
                 }
-                create()
-                show()
             }
+        }
+    }
+
+    private fun showError(error: Result.Error) {
+        AlertDialog.Builder(this).apply {
+            setTitle(getString(R.string.error_title))
+            setMessage(error.error)
+            setPositiveButton(getString(R.string.ok)) { _, _ -> }
+            create()
+            show()
         }
     }
 
@@ -100,5 +134,9 @@ class LoginActivity : AppCompatActivity() {
             )
             startDelay = 100
         }.start()
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }

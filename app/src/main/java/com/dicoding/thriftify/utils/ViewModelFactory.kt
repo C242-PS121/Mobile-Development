@@ -5,14 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.dicoding.thriftify.data.UserRepository
 import com.dicoding.thriftify.di.Injection
-import com.dicoding.thriftify.ui.account.AccountViewModel
-import com.dicoding.thriftify.ui.checkout.CheckoutViewModel
-import com.dicoding.thriftify.ui.favorite.FavoriteViewModel
-import com.dicoding.thriftify.ui.home.HomeViewModel
 import com.dicoding.thriftify.ui.login.LoginViewModel
 import com.dicoding.thriftify.ui.main.MainViewModel
 import com.dicoding.thriftify.ui.register.RegisterViewModel
-import com.dicoding.thriftify.ui.search.SearchViewModel
 
 
 class ViewModelFactory(private val repository: UserRepository) : ViewModelProvider.NewInstanceFactory() {

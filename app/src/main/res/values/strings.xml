@@ -39,5 +39,8 @@
     <string name="continue_button">Continue</string>
     <string name="registration_success_title">Registration Successful!</string>
     <string name="registration_success_message">Account with email %1$s has been created. Please login.</string>
+    <string name="error_unknown">An Unknown Error Occurred</string>
+    <string name="error_connection_failed">Failed to Connect to The Server</string>
+    <string name="error_title">Error</string>
 
 </resources>

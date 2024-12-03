@@ -8,17 +8,22 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
-import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.dicoding.thriftify.R
+import com.dicoding.thriftify.data.remote.request.RegisterRequest
 import com.dicoding.thriftify.databinding.ActivityRegisterBinding
 import com.dicoding.thriftify.ui.login.LoginActivity
+import com.dicoding.thriftify.utils.ViewModelFactory
+import com.dicoding.thriftify.data.Result
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
+
+    private val registerViewModel by viewModels<RegisterViewModel> {
+        ViewModelFactory.getInstance(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,25 +50,42 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun setupAction() {
         binding.registerButton.setOnClickListener {
-            val name = binding.edRegisterName.text.toString()
+            val fullname = binding.edRegisterName.text.toString()
             val email = binding.edRegisterEmail.text.toString()
             val password = binding.edRegisterPassword.text.toString()
 
-            if (!validateName(name) || !validateEmail(email) || !validatePassword(password)) {
+            if (!validateName(fullname) || !validateEmail(email) || !validatePassword(password)) {
                 return@setOnClickListener
             }
 
-            AlertDialog.Builder(this).apply {
-                setTitle(getString(R.string.registration_success_title))
-                setMessage(getString(R.string.registration_success_message, email))
-                setPositiveButton(getString(R.string.continue_button))  { _, _ ->
-                    val intent = Intent(context, LoginActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                    startActivity(intent)
-                    finish()
+            val registerRequest = RegisterRequest(email, password, fullname)
+
+            registerViewModel.register(registerRequest)
+            registerViewModel.registerResponse.observe(this) { result ->
+                when (result) {
+                    is Result.Loading -> {
+                        showLoading(true)
+                    }
+                    is Result.Success -> {
+                        showLoading(false)
+                        AlertDialog.Builder(this).apply {
+                            setTitle(getString(R.string.registration_success_title))
+                            setMessage(getString(R.string.registration_success_message, email))
+                            setPositiveButton(getString(R.string.continue_button)) { _, _ ->
+                                val intent = Intent(context, LoginActivity::class.java)
+                                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                startActivity(intent)
+                                finish()
+                            }
+                            create()
+                            show()
+                        }
+                    }
+                    is Result.Error -> {
+                        showLoading(false)
+                        showError(result)
+                    }
                 }
-                create()
-                show()
             }
         }
     }
@@ -106,6 +128,16 @@ class RegisterActivity : AppCompatActivity() {
         return true
     }
 
+    private fun showError(error: Result.Error) {
+        AlertDialog.Builder(this).apply {
+            setTitle(getString(R.string.error_title))
+            setMessage(error.error)
+            setPositiveButton(getString(R.string.ok)) { _, _ -> }
+            create()
+            show()
+        }
+    }
+
     private fun playAnimation() {
         ObjectAnimator.ofFloat(binding.imageView, View.TRANSLATION_X, -30f, 30f).apply {
             duration = 6000
@@ -142,5 +174,9 @@ class RegisterActivity : AppCompatActivity() {
             )
             startDelay = 100
         }.start()
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }

@@ -18,7 +18,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "BASE_URL", "\"https://event-api.dicoding.dev/\"")
+        buildConfigField("String", "BASE_URL", "\"https://thriftify.my.id/\"")
     }
 
     buildTypes {
@@ -79,6 +79,9 @@ dependencies {
     implementation (libs.androidx.camera.camera2)
     implementation (libs.androidx.camera.lifecycle)
     implementation (libs.androidx.camera.view)
+
+    implementation(libs.androidx.paging.runtime.ktx)
+
 
 
 }
