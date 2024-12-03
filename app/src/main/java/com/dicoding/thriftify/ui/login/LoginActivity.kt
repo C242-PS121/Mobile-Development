@@ -64,10 +64,12 @@ class LoginActivity : AppCompatActivity() {
                         showLoading(false)
                         val user = UserModel(
                             email,
+                            result.data.data.userId,
                             result.data.data.accessToken,
                             result.data.data.refreshToken,
                             true
                         )
+                        viewModel.saveSession(user)
                         viewModel.saveSession(user)
                         AlertDialog.Builder(this).apply {
                             setTitle(getString(R.string.success_title))

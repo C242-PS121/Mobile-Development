@@ -2,6 +2,7 @@ package com.dicoding.thriftify.data
 
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.dicoding.thriftify.R
@@ -17,6 +18,9 @@ import com.dicoding.thriftify.data.remote.retrofit.ApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.HttpException
@@ -54,7 +58,8 @@ class UserRepository private constructor(
                 val response = apiService.login(loginRequest)
                 val accessToken = response.data.accessToken
                 val refreshToken = response.data.refreshToken
-                saveSession(UserModel(loginRequest.email, accessToken, refreshToken, true))
+                val userId = response.data.userId
+                saveSession(UserModel(loginRequest.email, userId, accessToken, refreshToken, true))
                 emit(Result.Success(response))
             } catch (e: Exception) {
                 emit(Result.Error(e.message.toString()))
@@ -78,8 +83,74 @@ class UserRepository private constructor(
         return userPreference.getSession()
     }
 
+    fun logout(): LiveData<Result<LogoutResponse>> = liveData(Dispatchers.IO) {
+        emit(Result.Loading)
+        try {
+            val user = userPreference.getSession().first()
+            Log.d("Logout", "Refresh token: ${user.refreshToken}")
+
+            val requestBody = RequestBody.create(
+                "application/json".toMediaTypeOrNull(),
+                "{\"refresh_token\": \"${user.refreshToken}\"}"
+            )
+
+            val response = apiService.logout(requestBody)
+            if (response.message == "Successfully logged out") {
+                userPreference.logout()
+                emit(Result.Success(response))
+            } else {
+                response.message?.let { Result.Error(it) }?.let { emit(it) }
+            }
+        } catch (e: Exception) {
+            Log.e("Logout", "Error: ${e.message}", e)
+            val errorMessage = when (e) {
+                is HttpException -> {
+                    val errorResponse = e.response()?.errorBody()?.string()
+                    Log.e("Logout", "HTTP Error Body: $errorResponse")
+                    parseErrorMessage(errorResponse)
+                }
+                is IOException -> context.getString(R.string.error_connection_failed)
+                else -> context.getString(R.string.error_unknown)
+            }
+            emit(Result.Error(errorMessage))
+        }
+    }
 
 
+//    fun logout(): LiveData<Result<LogoutResponse>> = liveData(Dispatchers.IO) {
+//        emit(Result.Loading)
+//        try {
+//            val user = userPreference.getSession().first()
+//            Log.d("Logout", "Refresh token: ${user.refreshToken}")
+//
+//            val response = apiService.logout(user.refreshToken).execute()
+//            Log.d("Logout", "API Response: ${response.message()}")
+//
+//            if (response.isSuccessful) {
+//                response.body()?.let {
+//                    Log.d("Logout", "API Response: ${it.message}")
+//                    userPreference.logout()
+//                    emit(Result.Success(it))
+//                } ?: throw Exception("Response body is null")
+//            } else {
+//                val errorBody = response.errorBody()?.string()
+//                Log.e("Logout", "HTTP Error Body: $errorBody")
+//                throw HttpException(response)
+//            }
+//        } catch (e: Exception) {
+//            Log.e("Logout", "Error: ${e.message}", e)
+//            val errorMessage = when (e) {
+//                is HttpException -> {
+//                    val errorResponse = e.response()?.errorBody()?.string()
+//                    Log.e("Logout", "HTTP Error Body: $errorResponse")
+//                    parseErrorMessage(errorResponse)
+//                }
+//                is IOException -> context.getString(R.string.error_connection_failed)
+//                else -> context.getString(R.string.error_unknown)
+//            }
+//            emit(Result.Error(errorMessage))
+//        }
+//    }
 
 
     companion object {

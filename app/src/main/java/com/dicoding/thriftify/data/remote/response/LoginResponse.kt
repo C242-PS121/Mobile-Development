@@ -13,6 +13,9 @@ data class LoginResponse(
 
 data class Data(
 
+	@field:SerializedName("user_id")
+	val userId: String,
+
 	@field:SerializedName("access_token")
 	val accessToken: String,
 
