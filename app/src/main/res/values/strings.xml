@@ -43,6 +43,7 @@
     <string name="error_connection_failed">Failed to Connect to The Server</string>
     <string name="error_title">Error</string>
     <string name="register_text">Don\'t have an account? <a href="#">Register here</a></string>
-    <string name="login_text">Do you have an account? <a href="#">Click here</a></string>
+    <string name="login_text">Do you have an account? <a href="#">Login here</a></string>
+    <string name="message_register_page">Vintage Finds for a Refined Lifestyle</string>
 
 </resources>

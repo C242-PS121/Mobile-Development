@@ -44,5 +44,6 @@
     <string name="error_connection_failed">Gagal Nyambung ka Server</string>
     <string name="error_title">Eror</string>
     <string name="register_text">Teu gaduh akun? <a href="#">Daptar di dieu</a></string>
-    <string name="login_text">Naha anjeun gaduh akun? <a href="#">Klik di dieu</a></string>
+    <string name="login_text">Naha anjeun gaduh akun? <a href="#">Lebet di dieu</a></string>
+    <string name="message_register_page">Papanggihan Berkelas pikeun Gaya Hirup Méwah</string>
 </resources>

@@ -44,5 +44,6 @@
     <string name="error_connection_failed">サーバーに接続できませんでした</string>
     <string name="error_title">エラー</string>
     <string name="register_text">アカウントをお持ちではありませんか? <a href="#">こちらから登録してください</a></string>
-    <string name="login_text">アカウントをお持ちですか? <a href="#">こちらをクリックしてください</a></string>
+    <string name="login_text">アカウントをお持ちですか? <a href="#">こちらから登録</a></string>
+    <string name="message_register_page">洗練されたライフスタイルのためのヴィンテージ品</string>
 </resources>

@@ -44,5 +44,6 @@
     <string name="error_connection_failed">Échec de la connexion au serveur</string>
     <string name="error_title">Erreur</string>
     <string name="register_text">Vous n\'avez pas de compte? <a href="#">Inscrivez-vous ici</a></string>
-    <string name="login_text">Avez-vous un compte? <a href="#">Cliquez ici</a></string>
+    <string name="login_text">Avez-vous un compte? <a href="#">Inscrivez-vous ici</a></string>
+    <string name="message_register_page">Trouvailles vintage pour un style de vie raffiné</string>
 </resources>

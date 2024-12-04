@@ -44,5 +44,6 @@
     <string name="error_connection_failed">Gagal Terhubung ke Server</string>
     <string name="error_title">Kesalahan</string>
     <string name="register_text">Tidak punya akun? <a href="#">Daftar di sini</a></string>
-    <string name="login_text">Apakah Anda punya akun? <a href="#">Klik di sini</a></string>
+    <string name="login_text">Apakah Anda punya akun? <a href="#">Masuk di sini</a></string>
+    <string name="message_register_page">Temuan Berkelas untuk Gaya Hidup Mewah</string>
 </resources>

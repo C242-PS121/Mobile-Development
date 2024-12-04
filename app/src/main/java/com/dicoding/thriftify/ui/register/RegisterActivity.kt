@@ -153,6 +153,7 @@ class RegisterActivity : AppCompatActivity() {
         }.start()
 
         val title = ObjectAnimator.ofFloat(binding.titleTextView, View.ALPHA, 1f).setDuration(100)
+        val message = ObjectAnimator.ofFloat(binding.messageTextView, View.ALPHA, 1f).setDuration(100)
         val nameTextView =
             ObjectAnimator.ofFloat(binding.nameTextView, View.ALPHA, 1f).setDuration(100)
         val nameEditTextLayout =
@@ -172,6 +173,7 @@ class RegisterActivity : AppCompatActivity() {
         AnimatorSet().apply {
             playSequentially(
                 title,
+                message,
                 nameTextView,
                 nameEditTextLayout,
                 emailTextView,
