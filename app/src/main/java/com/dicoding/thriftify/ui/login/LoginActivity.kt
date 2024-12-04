@@ -53,6 +53,10 @@ class LoginActivity : AppCompatActivity() {
             val email = binding.edLoginEmail.text.toString()
             val password = binding.edLoginPassword.text.toString()
 
+            if (!validateEmail(email) || !validatePassword(password)) {
+                return@setOnClickListener
+            }
+
             val loginRequest = LoginRequest(email, password)
             viewModel.login(loginRequest)
             viewModel.loginResponse.observe(this) { result ->
@@ -102,6 +106,35 @@ class LoginActivity : AppCompatActivity() {
             create()
             show()
         }
+    }
+
+    private fun validateEmail(email: String): Boolean {
+        if (email.isBlank()) {
+            binding.edLoginEmail.error = getString(R.string.email_empty)
+            return false
+        }
+        if (!isValidEmail(email)) {
+            binding.edLoginEmail.error = getString(R.string.email_invalid)
+            return false
+        }
+        binding.edLoginEmail.error = null
+        return true
+    }
+    private fun isValidEmail(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    private fun validatePassword(password: String): Boolean {
+        if (password.isBlank()) {
+            binding.edLoginPassword.error = getString(R.string.password_empty)
+            return false
+        }
+        if (password.length < 8) {
+            binding.edLoginPassword.error = getString(R.string.password_less_than_8)
+            return false
+        }
+        binding.edLoginPassword.error = null
+        return true
     }
 
     private fun playAnimation() {
