@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Thriftify</string>
+    <string name="title_home">Beranda</string>
+    <string name="title_dashboard">Dasbor</string>
+    <string name="title_notifications">Pemberitahuan</string>
+    <string name="search">Pencarian</string>
+    <string name="account">Akun</string>
+    <string name="hello_blank_fragment">Halo fragmen kosong</string>
+    <string name="favorite">Favorit</string>
+    <string name="checkout">Checkout</string>
+    <string name="desc_avatar">Gambar Masuk</string>
+    <string name="password">Kata Sandi</string>
+    <string name="email">Email</string>
+    <string name="sign_in">Masuk</string>
+    <string name="password_less_than_8">Kata Sandi minimal harus terdiri dari 8 karakter</string>
+    <string name="name_empty">Nama tidak boleh kosong</string>
+    <string name="email_empty">Email tidak boleh kosong</string>
+    <string name="email_invalid">Format email tidak valid</string>
+    <string name="password_empty">Kata sandi tidak boleh kosong</string>
+    <string name="signup">Daftar</string>
+    <string name="login">Masuk</string>
+    <string name="message_welcome_page">Pakaian Bekas untuk Gaya Hidup Berkelas</string>
+    <string name="title_welcome_page">Selamat Datang di Aplikasi Thriftify!</string>
+    <string name="title_signup_page">Lengkapi Detail Anda di Bawah</string>
+    <string name="message_login_page">Gaya yang Berbicara, Tampilan Berkelas Dimulai di Sini</string>
+    <string name="title_login_page">Siap untuk berbagi cerita Anda di sini?</string>
+    <string name="name">Nama</string>
+    <string name="logout">Keluar</string>
+    <string name="error_message">Kesalahan</string>
+    <string name="login_logo">Logo Masuk</string>
+    <string name="description">Deskripsi</string>
+    <string name="yes">Ya</string>
+    <string name="no">Tidak</string>
+    <string name="logout_dialog_title">Keluar</string>
+    <string name="logout_dialog_message">Anda yakin ingin keluar?</string>
+    <string name="ok">Oke</string>
+    <string name="success_title">Hore!</string>
+    <string name="login_success_message">Anda telah berhasil masuk.</string>
+    <string name="continue_button">Lanjutkan</string>
+    <string name="registration_success_title">Pendaftaran Berhasil!</string>
+    <string name="registration_success_message">Akun dengan email %1$s telah dibuat. Silakan masuk.</string>
+    <string name="error_unknown">Terjadi Kesalahan Tidak Dikenal</string>
+    <string name="error_connection_failed">Gagal Terhubung ke Server</string>
+    <string name="error_title">Kesalahan</string>
+    <string name="register_text">Tidak punya akun? <a href="#">Daftar di sini</a></string>
+    <string name="login_text">Apakah Anda punya akun? <a href="#">Klik di sini</a></string>
+</resources>

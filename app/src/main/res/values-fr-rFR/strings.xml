@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Thriftify</string>
+    <string name="title_home">Accueil</string>
+    <string name="title_dashboard">Tableau de bord</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="search">Recherche</string>
+    <string name="account">Compte</string>
+    <string name="hello_blank_fragment">Bonjour fragment vide</string>
+    <string name="favorite">Favori</string>
+    <string name="checkout">Paiement</string>
+    <string name="desc_avatar">Image de connexion</string>
+    <string name="password">Mot de passe</string>
+    <string name="email">E-mail</string>
+    <string name="sign_in">Se connecter</string>
+    <string name="password_less_than_8">Le mot de passe doit comporter au moins 8 caractères</string>
+    <string name="name_empty">Le nom ne peut pas être vide</string>
+    <string name="email_empty">L\'adresse e-mail ne peut pas être vide</string>
+    <string name="email_invalid">Format d\'e-mail non valide</string>
+    <string name="password_empty">Le mot de passe ne peut pas être vide</string>
+    <string name="signup">S\'inscrire</string>
+    <string name="login">Connexion</string>
+    <string name="message_welcome_page">Vêtements d\'occasion pour un style de vie élégant</string>
+    <string name="title_welcome_page">Bienvenue sur l\'application Thriftify!</string>
+    <string name="title_signup_page">Complétez vos coordonnées ci-dessous</string>
+    <string name="message_login_page">Un style qui parle, des looks élégants commencent ici</string>
+    <string name="title_login_page">Prêt à partager votre histoire ici?</string>
+    <string name="name">Nom</string>
+    <string name="logout">Déconnexion</string>
+    <string name="error_message">Erreur</string>
+    <string name="login_logo">Logo de connexion</string>
+    <string name="description">Description</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+    <string name="logout_dialog_title">Déconnexion</string>
+    <string name="logout_dialog_message">Êtes-vous sûr de vouloir vous déconnecter?</string>
+    <string name="ok">OK</string>
+    <string name="success_title">Hourra!</string>
+    <string name="login_success_message">Vous vous êtes connecté avec succès.</string>
+    <string name="continue_button">Continuer</string>
+    <string name="registration_success_title">Inscription réussie!</string>
+    <string name="registration_success_message">Un compte avec l\'e-mail %1$s a été créé. Veuillez vous connecter.</string>
+    <string name="error_unknown">Une erreur inconnue s\'est produite</string>
+    <string name="error_connection_failed">Échec de la connexion au serveur</string>
+    <string name="error_title">Erreur</string>
+    <string name="register_text">Vous n\'avez pas de compte? <a href="#">Inscrivez-vous ici</a></string>
+    <string name="login_text">Avez-vous un compte? <a href="#">Cliquez ici</a></string>
+</resources>

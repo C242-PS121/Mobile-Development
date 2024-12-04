@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Thriftify</string>
+    <string name="title_home">ホーム</string>
+    <string name="title_dashboard">ダッシュボード</string>
+    <string name="title_notifications">通知</string>
+    <string name="search">検索</string>
+    <string name="account">アカウント</string>
+    <string name="hello_blank_fragment">Hello 空白フラグメント</string>
+    <string name="favorite">お気に入り</string>
+    <string name="checkout">チェックアウト</string>
+    <string name="desc_avatar">ログイン画像</string>
+    <string name="password">パスワード</string>
+    <string name="email">メール</string>
+    <string name="sign_in">サインイン</string>
+    <string name="password_less_than_8">パスワードは 8 文字以上である必要があります</string>
+    <string name="name_empty">名前は空にできません</string>
+    <string name="email_empty">メールアドレスは空欄にできません</string>
+    <string name="email_invalid">メールアドレスの形式が正しくありません</string>
+    <string name="password_empty">パスワードは空欄にできません</string>
+    <string name="signup">登録</string>
+    <string name="login">ログイン</string>
+    <string name="message_welcome_page">上品なライフスタイルのための中古衣料品</string>
+    <string name="title_welcome_page">Thriftify アプリへようこそ!</string>
+    <string name="title_signup_page">以下に詳細を入力してください</string>
+    <string name="message_login_page">スタイルが語る、上品なルックスがここから始まります</string>
+    <string name="title_login_page">ここであなたのストーリーを共有する準備はできましたか?</string>
+    <string name="name">名前</string>
+    <string name="logout">ログアウト</string>
+    <string name="error_message">エラー</string>
+    <string name="login_logo">ログイン ロゴ</string>
+    <string name="description">説明</string>
+    <string name="yes">はい</string>
+    <string name="no">いいえ</string>
+    <string name="logout_dialog_title">ログアウト</string>
+    <string name="logout_dialog_message">ログアウトしてもよろしいですか?</string>
+    <string name="ok">OK</string>
+    <string name="success_title">やったー!</string>
+    <string name="login_success_message">ログインに成功しました。</string>
+    <string name="continue_button">続行</string>
+    <string name="registration_success_title">登録に成功しました!</string>
+    <string name="registration_success_message">メール アドレス %1$s のアカウントが作成されました。ログインしてください。</string>
+    <string name="error_unknown">不明なエラーが発生しました</string>
+    <string name="error_connection_failed">サーバーに接続できませんでした</string>
+    <string name="error_title">エラー</string>
+    <string name="register_text">アカウントをお持ちではありませんか? <a href="#">こちらから登録してください</a></string>
+    <string name="login_text">アカウントをお持ちですか? <a href="#">こちらをクリックしてください</a></string>
+</resources>

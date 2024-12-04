@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -18,6 +19,7 @@ import com.dicoding.thriftify.ui.main.MainActivity
 import com.dicoding.thriftify.utils.ViewModelFactory
 import com.dicoding.thriftify.data.Result
 import com.dicoding.thriftify.data.remote.request.LoginRequest
+import com.dicoding.thriftify.ui.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
     private val viewModel by viewModels<LoginViewModel> {
@@ -29,6 +31,12 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.registerTextView.movementMethod = LinkMovementMethod.getInstance()
+        binding.registerTextView.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
 
         setupView()
         setupAction()
@@ -156,6 +164,7 @@ class LoginActivity : AppCompatActivity() {
         val passwordEditTextLayout =
             ObjectAnimator.ofFloat(binding.passwordEditTextLayout, View.ALPHA, 1f).setDuration(100)
         val login = ObjectAnimator.ofFloat(binding.loginButton, View.ALPHA, 1f).setDuration(100)
+        val loginText = ObjectAnimator.ofFloat(binding.registerTextView, View.ALPHA, 1f).setDuration(100)
 
         AnimatorSet().apply {
             playSequentially(
@@ -165,7 +174,8 @@ class LoginActivity : AppCompatActivity() {
                 emailEditTextLayout,
                 passwordTextView,
                 passwordEditTextLayout,
-                login
+                login,
+                loginText
             )
             startDelay = 100
         }.start()

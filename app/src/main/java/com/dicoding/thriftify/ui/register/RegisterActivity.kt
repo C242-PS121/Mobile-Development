@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -29,6 +30,12 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.loginTextView.movementMethod = LinkMovementMethod.getInstance()
+        binding.loginTextView.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
 
         setupView()
         setupAction()
@@ -159,6 +166,7 @@ class RegisterActivity : AppCompatActivity() {
         val passwordEditTextLayout =
             ObjectAnimator.ofFloat(binding.passwordEditTextLayout, View.ALPHA, 1f).setDuration(100)
         val signup = ObjectAnimator.ofFloat(binding.registerButton, View.ALPHA, 1f).setDuration(100)
+        val login = ObjectAnimator.ofFloat(binding.loginTextView, View.ALPHA, 1f).setDuration(100)
 
 
         AnimatorSet().apply {
@@ -170,7 +178,8 @@ class RegisterActivity : AppCompatActivity() {
                 emailEditTextLayout,
                 passwordTextView,
                 passwordEditTextLayout,
-                signup
+                signup,
+                login
             )
             startDelay = 100
         }.start()

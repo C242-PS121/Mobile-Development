@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Thriftify</string>
+    <string name="title_home">Bumi</string>
+    <string name="title_dashboard">Dasbor</string>
+    <string name="title_notifications">Bewara</string>
+    <string name="search">Teangan</string>
+    <string name="account">Akun</string>
+    <string name="hello_blank_fragment">Halo fragmén kosong</string>
+    <string name="favorite">Paporit</string>
+    <string name="checkout">Checkout</string>
+    <string name="desc_avatar">Gambar Asup</string>
+    <string name="password">Sandi</string>
+    <string name="email">Surélék</string>
+    <string name="sign_in">Asup</string>
+    <string name="password_less_than_8">Sandi kudu sahenteuna 8 karakter</string>
+    <string name="name_empty">Ngaran teu bisa kosong</string>
+    <string name="email_empty">Surélék teu bisa kosong</string>
+    <string name="email_invalid">Format surélék teu valid</string>
+    <string name="password_empty" >Sandi teu bisa kosong</string>
+    <string name="signup">Ngadaptar</string>
+    <string name="login">Login</string>
+    <string name="message_welcome_page">Pakéan Dipikaresep pikeun Gaya Hirup Berkelas</string>
+    <string name="title_welcome_page">Wilujeng sumping di Thriftify App!</string>
+    <string name="title_signup_page">Lengkepan Rincian Anjeun Di handap</string>
+    <string name="message_login_page">Gaya Anu Nyarita, Katingal Berkelas Mimitian Di dieu</string>
+    <string name="title_login_page">Siap ngabagikeun carita anjeun di dieu?</string>
+    <string name="name">Ngaran</string>
+    <string name="logout">Logout</string>
+    <string name="error_message">Eror</string>
+    <string name="login_logo">Logo Asup</string>
+    <string name="description">Deskripsi</string>
+    <string name="yes">Leres</string>
+    <string name="no">No</string>
+    <string name="logout_dialog_title">Kaluar</string>
+    <string name="logout_dialog_message" >Naha anjeun yakin rék kaluar?</string>
+    <string name="ok">OK</string>
+    <string name="success_title">Hore!</string>
+    <string name="login_success_message">Anjeun geus hasil asup log.</string>
+    <string name="continue_button">Teruskeun</string>
+    <string name="registration_success_title">Pendaptaran Sukses!</string>
+    <string name="registration_success_message">Akun nganggo surelek %1$s geus dijieun. Mangga lebet.</string>
+    <string name="error_unknown">Anu Kanyahoan Kasalahan Kajadian</string>
+    <string name="error_connection_failed">Gagal Nyambung ka Server</string>
+    <string name="error_title">Eror</string>
+    <string name="register_text">Teu gaduh akun? <a href="#">Daptar di dieu</a></string>
+    <string name="login_text">Naha anjeun gaduh akun? <a href="#">Klik di dieu</a></string>
+</resources>
