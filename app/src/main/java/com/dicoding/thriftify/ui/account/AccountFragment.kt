@@ -2,7 +2,6 @@ package com.dicoding.thriftify.ui.account
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,61 +38,41 @@ class AccountFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.logoutButton.setOnClickListener {
-            mainViewModel.logout().observe(viewLifecycleOwner) { result ->
-                when (result) {
-                    is Result.Loading -> {
-                        Log.d("Logout", "Loading...")
-                        showLoading(true)
-                    }
-                    is Result.Success -> {
-                        showLoading(false)
-                        Log.d("Logout", "Logout successful: ${result.data.message}")
-                        Toast.makeText(requireContext(), result.data.message, Toast.LENGTH_SHORT).show()
-                        val intent = Intent(requireContext(), WelcomeActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        startActivity(intent)
-                    }
-                    is Result.Error -> {
-                        showLoading(false)
-                        Log.e("Logout", "Error: ${result.error}")
-                        showError(result)
+            AlertDialog.Builder(requireContext())
+                .setTitle("Logout")
+                .setMessage("Are you sure you want to logout?")
+                .setPositiveButton("Yes") { _, _ ->
+                    mainViewModel.logout().observe(viewLifecycleOwner) { result ->
+                        when (result) {
+                            is Result.Loading -> {
+                                showLoading(true)
+                            }
+
+                            is Result.Success -> {
+                                showLoading(false)
+                                Toast.makeText(
+                                    requireContext(),
+                                    result.data.message,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                val intent = Intent(requireContext(), WelcomeActivity::class.java)
+                                intent.flags =
+                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                startActivity(intent)
+                            }
+
+                            is Result.Error -> {
+                                showLoading(false)
+                                showError(result)
+                            }
+                        }
                     }
                 }
-            }
+                .setNegativeButton("No") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
         }
-
-//        binding.logoutButton.setOnClickListener {
-//            mainViewModel.logout()
-//            mainViewModel.logoutResponse.observe(viewLifecycleOwner) { result ->
-//                when (result) {
-//                    is Result.Loading -> {
-//                        Log.d("Logout", "Loading...")
-//                        showLoading(true)
-//                    }
-//
-//                    is Result.Success -> {
-//                        showLoading(false)
-//                        Log.d("Logout", "Logout successful: ${result.data.message}")
-//                        val intent = Intent(requireActivity(), WelcomeActivity::class.java)
-//                        intent.flags =
-//                            Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-//                        startActivity(intent)
-//                        requireActivity().finish()
-//                    }
-//
-//                    is Result.Error -> {
-//                        Log.e("Logout", "Error: ${result.error}")
-//                        showLoading(false)
-//                        showError(result)
-//                    }
-//                    else -> {
-//                        Toast.makeText(requireContext(), getString(R.string.error_unknown), Toast.LENGTH_SHORT).show()
-//                    }
-//                }
-//            }
-//        }
-
-
     }
 
     private fun showLoading(isLoading: Boolean) {
