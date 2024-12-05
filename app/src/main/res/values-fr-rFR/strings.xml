@@ -46,4 +46,9 @@
     <string name="register_text">Vous n\'avez pas de compte? <a href="#">Inscrivez-vous ici</a></string>
     <string name="login_text">Avez-vous un compte? <a href="#">Inscrivez-vous ici</a></string>
     <string name="message_register_page">Trouvailles vintage pour un style de vie raffiné</string>
+    <string name="phone">Numéro de téléphone</string>
+    <string name="phone_empty">Le numéro de téléphone ne peut pas être vide</string>
+    <string name="phone_invalid">Le numéro de téléphone est invalide</string>
+    <string name="phone_must_number">Vous ne pouvez saisir que des numéros</string>
+
 </resources>

@@ -46,4 +46,9 @@
     <string name="register_text">アカウントをお持ちではありませんか? <a href="#">こちらから登録してください</a></string>
     <string name="login_text">アカウントをお持ちですか? <a href="#">こちらから登録</a></string>
     <string name="message_register_page">洗練されたライフスタイルのためのヴィンテージ品</string>
+    <string name="phone">電話番号</string>
+    <string name="phone_empty">電話番号は空にできません</string>
+    <string name="phone_invalid">電話番号が無効です</string>
+    <string name="phone_must_number">数字のみ入力できます</string>
+
 </resources>

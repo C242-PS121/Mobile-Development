@@ -45,5 +45,9 @@
     <string name="register_text">Don\'t have an account? <a href="#">Register here</a></string>
     <string name="login_text">Do you have an account? <a href="#">Login here</a></string>
     <string name="message_register_page">Vintage Finds for a Refined Lifestyle</string>
+    <string name="phone">Phone Number</string>
+    <string name="phone_empty">Phone Number Cannot Empty</string>
+    <string name="phone_invalid">Phone Number is Invalid</string>
+    <string name="phone_must_number">You Can Only Input Numbers</string>
 
 </resources>

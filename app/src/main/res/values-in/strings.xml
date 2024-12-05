@@ -46,4 +46,9 @@
     <string name="register_text">Tidak punya akun? <a href="#">Daftar di sini</a></string>
     <string name="login_text">Apakah Anda punya akun? <a href="#">Masuk di sini</a></string>
     <string name="message_register_page">Temuan Berkelas untuk Gaya Hidup Mewah</string>
+    <string name="phone">Nomor Telepon</string>
+    <string name="phone_empty">Nomor Telepon Tidak Boleh Kosong</string>
+    <string name="phone_invalid">Nomor Telepon Tidak Valid</string>
+    <string name="phone_must_number">Hanya Bisa Memasukkan Angka</string>
+
 </resources>

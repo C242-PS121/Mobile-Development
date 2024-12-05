@@ -58,14 +58,15 @@ class RegisterActivity : AppCompatActivity() {
     private fun setupAction() {
         binding.registerButton.setOnClickListener {
             val fullname = binding.edRegisterName.text.toString()
+            val phone = binding.edRegisterPhone.text.toString()
             val email = binding.edRegisterEmail.text.toString()
             val password = binding.edRegisterPassword.text.toString()
 
-            if (!validateName(fullname) || !validateEmail(email) || !validatePassword(password)) {
+            if (!validateName(fullname) || !validatePhoneNumber(phone) || !validateEmail(email) || !validatePassword(password)) {
                 return@setOnClickListener
             }
 
-            val registerRequest = RegisterRequest(email, password, fullname)
+            val registerRequest = RegisterRequest(email, password, fullname, phone)
 
             registerViewModel.register(registerRequest)
             registerViewModel.registerResponse.observe(this) { result ->
@@ -104,6 +105,25 @@ class RegisterActivity : AppCompatActivity() {
         }
         binding.edRegisterName.error = null
         return true
+    }
+
+    private fun validatePhoneNumber(phoneNumber: String): Boolean {
+        if (phoneNumber.isBlank()) {
+            binding.edRegisterPhone.error = getString(R.string.phone_empty)
+            return false
+        } else if (phoneNumber.length < 8 || phoneNumber.length > 13) {
+            binding.edRegisterPhone.error = getString(R.string.phone_invalid)
+            return false
+        } else if (!isValidPhoneNumber(phoneNumber)) {
+            binding.edRegisterPhone.error = getString(R.string.phone_must_number)
+            return false
+        }
+        binding.edRegisterPhone.error = null
+        return true
+    }
+
+    private fun isValidPhoneNumber(phone: String): Boolean {
+        return phone.matches(Regex("^\\d{8,13}$")) && phone.all { it.isDigit() }
     }
 
     private fun validateEmail(email: String): Boolean {
@@ -158,6 +178,8 @@ class RegisterActivity : AppCompatActivity() {
             ObjectAnimator.ofFloat(binding.nameTextView, View.ALPHA, 1f).setDuration(100)
         val nameEditTextLayout =
             ObjectAnimator.ofFloat(binding.nameEditTextLayout, View.ALPHA, 1f).setDuration(100)
+        val phoneTextView = ObjectAnimator.ofFloat(binding.phoneTextView, View.ALPHA, 1f).setDuration(100)
+        val phoneEditTextLayout = ObjectAnimator.ofFloat(binding.phoneEditTextLayout, View.ALPHA, 1f).setDuration(100)
         val emailTextView =
             ObjectAnimator.ofFloat(binding.emailTextView, View.ALPHA, 1f).setDuration(100)
         val emailEditTextLayout =
@@ -176,6 +198,8 @@ class RegisterActivity : AppCompatActivity() {
                 message,
                 nameTextView,
                 nameEditTextLayout,
+                phoneTextView,
+                phoneEditTextLayout,
                 emailTextView,
                 emailEditTextLayout,
                 passwordTextView,

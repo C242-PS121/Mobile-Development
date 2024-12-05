@@ -12,6 +12,7 @@ import com.dicoding.thriftify.data.remote.request.RegisterRequest
 import com.dicoding.thriftify.data.remote.response.LoginResponse
 import com.dicoding.thriftify.data.remote.response.LogoutResponse
 import com.dicoding.thriftify.data.remote.response.RegisterResponse
+import com.dicoding.thriftify.data.remote.response.UserResponse
 import com.dicoding.thriftify.data.remote.retrofit.ApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -71,6 +72,24 @@ class UserRepository private constructor(
                 emit(Result.Error(errorMessage))
             }
         }
+
+    fun getUserById(id: String): LiveData<Result<UserResponse>> = liveData(Dispatchers.IO) {
+        emit(Result.Loading)
+        try {
+            val response = apiService.getUserById(id)
+            emit(Result.Success(response))
+        } catch (e: Exception) {
+            val errorMessage = when (e) {
+                is HttpException -> {
+                    val errorResponse = e.response()?.errorBody()?.string()
+                    parseErrorMessage(errorResponse)
+                }
+                is IOException -> context.getString(R.string.error_connection_failed)
+                else -> context.getString(R.string.error_unknown)
+            }
+            emit(Result.Error(errorMessage))
+        }
+    }
 
     suspend fun saveSession(user: UserModel) {
         userPreference.saveSession(user)

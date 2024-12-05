@@ -2,6 +2,7 @@ package com.dicoding.thriftify.ui.account
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +37,28 @@ class AccountFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mainViewModel.getSession().observe(viewLifecycleOwner) { userModel ->
+            if (userModel.isLogin) {
+                val userId = userModel.userId
+                mainViewModel.getUserById(userId).observe(viewLifecycleOwner) { result ->
+                    when (result) {
+                        is Result.Loading -> showLoading(true)
+                        is Result.Success -> {
+                            showLoading(false)
+                            val user = result.data
+                            Log.d("AccountFragment", "User data: $user")
+                            binding.tvFullname.text = user.data.fullname
+                            binding.tvPhone.text = user.data.phone
+                            binding.tvEmail.text = user.data.email
+                        }
+                        is Result.Error -> {
+                            showLoading(false)
+                            Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
+        }
 
         binding.logoutButton.setOnClickListener {
             AlertDialog.Builder(requireContext())
