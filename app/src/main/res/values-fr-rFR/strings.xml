@@ -50,5 +50,6 @@
     <string name="phone_empty">Le numéro de téléphone ne peut pas être vide</string>
     <string name="phone_invalid">Le numéro de téléphone est invalide</string>
     <string name="phone_must_number">Vous ne pouvez saisir que des numéros</string>
+    <string name="favorite_events">Événements favoris</string>
 
 </resources>

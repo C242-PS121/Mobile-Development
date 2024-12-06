@@ -50,5 +50,6 @@
     <string name="phone_empty">Nomor Telepon Tidak Boleh Kosong</string>
     <string name="phone_invalid">Nomor Telepon Tidak Valid</string>
     <string name="phone_must_number">Hanya Bisa Memasukkan Angka</string>
+    <string name="favorite_events">Events Favorit</string>
 
 </resources>

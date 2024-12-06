@@ -50,5 +50,6 @@
     <string name="phone_empty">Nomor Telepon Teu Kenging Kosong</string>
     <string name="phone_invalid">Nomor Telepon Teu Valid</string>
     <string name="phone_must_number">Anjeun Ngan Bisa Ngetik Nomor</string>
+    <string name="favorite_events">Events Paporit</string>
 
 </resources>

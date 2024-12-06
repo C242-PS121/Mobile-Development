@@ -49,5 +49,6 @@
     <string name="phone_empty">Phone Number Cannot Empty</string>
     <string name="phone_invalid">Phone Number is Invalid</string>
     <string name="phone_must_number">You Can Only Input Numbers</string>
+    <string name="favorite_events">Favorite Events</string>
 
 </resources>
