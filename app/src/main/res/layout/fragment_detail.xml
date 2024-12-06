@@ -6,160 +6,174 @@
     android:layout_height="match_parent"
     tools:context=".ui.detail.detailFragment">
 
-<ScrollView
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:fillViewport="true">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="16dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
 
-    <!-- Image for Event Logo -->
-    <ImageView
-        android:id="@+id/imageLogo"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:scaleType="centerCrop"
-        android:contentDescription="Event Logo"/>
+            <!-- Image for Event Logo -->
+            <ImageView
+                android:id="@+id/imageLogo"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:scaleType="centerCrop"
+                android:contentDescription="Event Logo"/>
 
-    <!-- Event Name Text -->
-    <TextView
-        android:id="@+id/eventName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:text="Event Name"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/imageLogo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+            <!-- Event Name Text -->
+            <TextView
+                android:id="@+id/eventName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:text="Event Name"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@id/imageLogo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Event Owner Text -->
-    <TextView
-        android:id="@+id/ownerName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Owner"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/eventName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+            <!-- Event Owner Text -->
+            <TextView
+                android:id="@+id/ownerName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Owner"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/eventName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Remaining Quota Text -->
-    <TextView
-        android:id="@+id/price"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Price"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/ownerName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+            <!-- Harga Pakaian -->
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Price"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/ownerName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
+            <!-- Tipe Pakaian -->
+            <TextView
+                android:id="@+id/clothing_type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Tipe Pakaian"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/price"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- End Time Text -->
-    <TextView
-        android:id="@+id/clothing_type"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Tipe Pakaian"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/price"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+            <!-- Description Text -->
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@id/clothing_type"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineVertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
 
-    <!-- Description Text -->
-    <TextView
-        android:id="@+id/description"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Description"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/clothing_type"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+            <!-- Email Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/emailButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:backgroundTint="@color/teal_200"
+                android:text="Email"
+                app:icon="@drawable/ic_alternate_email"
+                app:iconGravity="textStart"
+                app:layout_constraintEnd_toStartOf="@id/whatsappButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description"
+                app:layout_constraintHorizontal_bias="0.3" />
 
-    <!-- Register Button -->
-    <Button
-        android:id="@+id/whatsappButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="WhatsApp"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/teal_300"
-        app:layout_constraintTop_toBottomOf="@id/description"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-    <Button
-        android:id="@+id/EmailButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Email"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/teal_200"
-        app:layout_constraintTop_toBottomOf="@id/whatsappButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+            <!-- WhatssApp Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/whatsappButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:backgroundTint="@color/teal_200"
+                android:text="WhatsApp"
+                app:icon="@drawable/ic_baseline_local_phone_24"
+                app:iconGravity="textStart"
+                app:layout_constraintStart_toEndOf="@id/emailButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description"
+                app:layout_constraintHorizontal_bias="0.7" />
 
-    <!-- Error Message Text -->
-    <TextView
-        android:id="@+id/error_text_view"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/holo_red_dark"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/openLinkButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"/>
+            <!-- Error Text Massage -->
+            <TextView
+                android:id="@+id/error_text_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_dark"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/whatsappButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="16dp"/>
 
-    <!-- Progress Bar -->
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_gravity="center"/>
+            <!-- Progress Bar -->
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="center"/>
 
-    <!-- Loading Text -->
-    <TextView
-        android:id="@+id/loading_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Loading..."
-        android:layout_marginTop="8dp"
-        android:visibility="gone"
-        android:textColor="@android:color/darker_gray"
-        app:layout_constraintTop_toBottomOf="@id/progress_bar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_gravity="center"/>
+            <!-- Loading Text -->
+            <TextView
+                android:id="@+id/loading_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Loading..."
+                android:layout_marginTop="8dp"
+                android:visibility="gone"
+                android:textColor="@android:color/darker_gray"
+                app:layout_constraintTop_toBottomOf="@id/progress_bar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="center"/>
 
-    <!-- Floating Action Button for Favorite -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_favorite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/eventName"
-        app:layout_constraintEnd_toEndOf="@id/eventName"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/ic_favorite_border"
-        android:contentDescription="@string/favorite_events"
-        app:backgroundTint="@color/teal_700" />
+            <!-- Floating Action Button for Favorite -->
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@id/eventName"
+                app:layout_constraintEnd_toEndOf="@id/eventName"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_favorite_border"
+                android:contentDescription="@string/favorite_events"
+                app:backgroundTint="@color/teal_300" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-</ScrollView>
-    </FrameLayout>
+    </ScrollView>
+</FrameLayout>

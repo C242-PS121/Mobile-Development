@@ -51,5 +51,6 @@
     <string name="phone_invalid">電話番号が無効です</string>
     <string name="phone_must_number">数字のみ入力できます</string>
     <string name="favorite_events">お気に入りのイベント</string>
+    <string name="send_email">Send_email</string>
 
 </resources>

@@ -50,5 +50,6 @@
     <string name="phone_invalid">Phone Number is Invalid</string>
     <string name="phone_must_number">You Can Only Input Numbers</string>
     <string name="favorite_events">Favorite Events</string>
+    <string name="send_email">Send_email</string>
 
 </resources>
