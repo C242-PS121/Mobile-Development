@@ -100,25 +100,6 @@ class UserRepository private constructor(
         }
     }
 
-
-//    fun getUserById(userId: String, accessToken: String): LiveData<Result<UserResponse>> = liveData(Dispatchers.IO) {
-//        emit(Result.Loading)
-//        try {
-//            val response = apiService.getUserById(userId, "Bearer $accessToken")
-//            emit(Result.Success(response))
-//        } catch (e: Exception) {
-//            val errorMessage = when (e) {
-//                is HttpException -> {
-//                    val errorResponse = e.response()?.errorBody()?.string()
-//                    parseErrorMessage(errorResponse)
-//                }
-//                is IOException -> context.getString(R.string.error_connection_failed)
-//                else -> context.getString(R.string.error_unknown)
-//            }
-//            emit(Result.Error(errorMessage))
-//        }
-//    }
-
     fun getUserById(userId: String, accessToken: String): LiveData<Result<UserResponse>> = liveData(Dispatchers.IO) {
         emit(Result.Loading)
         try {
