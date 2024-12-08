@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.HttpException
@@ -73,11 +74,19 @@ class UserRepository private constructor(
             }
         }
 
-    fun getUserById(id: String): LiveData<Result<UserResponse>> = liveData(Dispatchers.IO) {
-        emit(Result.Loading)
-        try {
-            val response = apiService.getUserById(id)
-            emit(Result.Success(response))
+    private suspend fun refreshAccessToken(refreshToken: String): Result<String> {
+        return try {
+            val requestBody = "{\"refresh_token\": \"$refreshToken\"}"
+                .toRequestBody("application/json".toMediaTypeOrNull())
+            val response = apiService.refreshAccessToken(requestBody)
+            val newAccessToken = response.data.accessToken
+            val currentSession = userPreference.getSession().first()
+            saveSession(
+                currentSession.copy(
+                    accessToken = newAccessToken
+                )
+            )
+            Result.Success(newAccessToken)
         } catch (e: Exception) {
             val errorMessage = when (e) {
                 is HttpException -> {
@@ -87,9 +96,54 @@ class UserRepository private constructor(
                 is IOException -> context.getString(R.string.error_connection_failed)
                 else -> context.getString(R.string.error_unknown)
             }
-            emit(Result.Error(errorMessage))
+            Result.Error(errorMessage)
         }
     }
+
+
+//    fun getUserById(userId: String, accessToken: String): LiveData<Result<UserResponse>> = liveData(Dispatchers.IO) {
+//        emit(Result.Loading)
+//        try {
+//            val response = apiService.getUserById(userId, "Bearer $accessToken")
+//            emit(Result.Success(response))
+//        } catch (e: Exception) {
+//            val errorMessage = when (e) {
+//                is HttpException -> {
+//                    val errorResponse = e.response()?.errorBody()?.string()
+//                    parseErrorMessage(errorResponse)
+//                }
+//                is IOException -> context.getString(R.string.error_connection_failed)
+//                else -> context.getString(R.string.error_unknown)
+//            }
+//            emit(Result.Error(errorMessage))
+//        }
+//    }
+
+    fun getUserById(userId: String, accessToken: String): LiveData<Result<UserResponse>> = liveData(Dispatchers.IO) {
+        emit(Result.Loading)
+        try {
+            val response = apiService.getUserById(userId, "Bearer $accessToken")
+            emit(Result.Success(response))
+        } catch (e: HttpException) {
+            if (e.code() == 401) {
+                val currentUser = userPreference.getSession().first()
+                val newAccessToken = refreshAccessToken(currentUser.refreshToken)
+                try {
+                    val retryResponse = apiService.getUserById(userId, "Bearer $newAccessToken")
+                    emit(Result.Success(retryResponse))
+                } catch (retryException: Exception) {
+                    emit(Result.Error("Failed after retry: ${retryException.message}"))
+                }
+            } else {
+                emit(Result.Error("HTTP Error: ${e.message}"))
+            }
+        } catch (e: IOException) {
+            emit(Result.Error("Network error: ${e.message}"))
+        } catch (e: Exception) {
+            emit(Result.Error("Unexpected error: ${e.message}"))
+        }
+    }
+
 
     suspend fun saveSession(user: UserModel) {
         userPreference.saveSession(user)
@@ -103,10 +157,8 @@ class UserRepository private constructor(
         emit(Result.Loading)
         try {
             val user = userPreference.getSession().first()
-            val requestBody = RequestBody.create(
-                "application/json".toMediaTypeOrNull(),
-                "{\"refresh_token\": \"${user.refreshToken}\"}"
-            )
+            val requestBody = "{\"refresh_token\": \"${user.refreshToken}\"}"
+                .toRequestBody("application/json".toMediaTypeOrNull())
 
             val response = apiService.logout(requestBody)
             if (response.message == "Successfully logged out") {

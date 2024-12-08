@@ -11,8 +11,8 @@ import com.dicoding.thriftify.data.remote.response.UserResponse
 
 class MainViewModel(private val repository: UserRepository) : ViewModel() {
 
-    fun getUserById(userId: String): LiveData<Result<UserResponse>> {
-        return repository.getUserById(userId)
+    fun getUserById(userId: String, accessToken: String): LiveData<Result<UserResponse>> {
+        return repository.getUserById(userId, accessToken)
     }
 
     fun logout(): LiveData<Result<LogoutResponse>> {

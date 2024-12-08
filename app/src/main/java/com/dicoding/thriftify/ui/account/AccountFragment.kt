@@ -40,7 +40,7 @@ class AccountFragment : Fragment() {
         mainViewModel.getSession().observe(viewLifecycleOwner) { userModel ->
             if (userModel.isLogin) {
                 val userId = userModel.userId
-                mainViewModel.getUserById(userId).observe(viewLifecycleOwner) { result ->
+                mainViewModel.getUserById(userId, userModel.accessToken).observe(viewLifecycleOwner) { result ->
                     when (result) {
                         is Result.Loading -> showLoading(true)
                         is Result.Success -> {
