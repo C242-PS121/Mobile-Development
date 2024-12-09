@@ -51,6 +51,19 @@
     <string name="phone_invalid">Nomor Telepon Tidak Valid</string>
     <string name="phone_must_number">Hanya Bisa Memasukkan Angka</string>
     <string name="favorite_events">Events Favorit</string>
-    <string name="send_email">Send_email</string>
+    <string name="send_email">Kirim Email</string>
+    <string name="product_image">Gambar Produk</string>
+    <string name="camera">Kamera</string>
+    <string name="gallery">Galeri</string>
+    <string name="description_hint">Tulis Deskripsi Produk Anda di Sini</string>
+    <string name="upload">Unggah</string>
+    <string name="upload_product">Unggah Produk Anda</string>
+    <string name="product_name">Nama Produk</string>
+    <string name="product_price">Harga</string>
+    <string name="product_clothing_type">Jenis Pakaian</string>
+    <string name="button_add_product">Tambah Produk</string>
+    <string name="history_of_clothing">Sejarah Pakaian</string>
+    <string name="clothing_list">Daftar Pakaian</string>
+
 
 </resources>

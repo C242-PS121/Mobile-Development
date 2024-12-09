@@ -51,5 +51,17 @@
     <string name="phone_must_number">You Can Only Input Numbers</string>
     <string name="favorite_events">Favorite Events</string>
     <string name="send_email">Send_email</string>
+    <string name="product_image">Product Image</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Galery</string>
+    <string name="description_hint">Write Your Product Description Here</string>
+    <string name="upload">Upload</string>
+    <string name="upload_product">Upload Your Product</string>
+    <string name="product_name">Product Name</string>
+    <string name="product_price">Price</string>
+    <string name="product_clothing_type">Clothing Type</string>
+    <string name="button_add_product">Add Product</string>
+    <string name="history_of_clothing">History of Clothing</string>
+    <string name="clothing_list">Clothing List</string>
 
 </resources>

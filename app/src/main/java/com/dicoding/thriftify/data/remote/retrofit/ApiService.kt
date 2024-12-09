@@ -1,7 +1,6 @@
 package com.dicoding.thriftify.data.remote.retrofit
 
 import com.dicoding.thriftify.data.remote.request.LoginRequest
-import com.dicoding.thriftify.data.remote.request.RefreshTokenRequest
 import com.dicoding.thriftify.data.remote.request.RegisterRequest
 import com.dicoding.thriftify.data.remote.response.LoginResponse
 import com.dicoding.thriftify.data.remote.response.LogoutResponse
@@ -27,14 +26,10 @@ interface ApiService {
         @Body loginRequest: LoginRequest
     ): LoginResponse
 
-//    @PUT("auth/login")
-//    suspend fun refreshToken(@Body refreshToken: RefreshTokenRequest): RefreshTokenResponse
-
     @PUT("auth/login")
     suspend fun refreshAccessToken(
         @Body requestBody: RequestBody
     ): RefreshTokenResponse
-
 
     @GET("users/{id}")
     suspend fun getUserById(

@@ -51,6 +51,19 @@
     <string name="phone_invalid">電話番号が無効です</string>
     <string name="phone_must_number">数字のみ入力できます</string>
     <string name="favorite_events">お気に入りのイベント</string>
-    <string name="send_email">Send_email</string>
+    <string name="send_email">メールを送信</string>
+    <string name="product_image">商品画像</string>
+    <string name="camera">カメラ</string>
+    <string name="gallery">ギャラリー</string>
+    <string name="description_hint">ここに製品の説明を書いてください</string>
+    <string name="upload">アップロード</string>
+    <string name="upload_product">製品をアップロード</string>
+    <string name="product_name">製品名</string>
+    <string name="product_price">価格</string>
+    <string name="product_clothing_type">服の種類</string>
+    <string name="button_add_product">製品を追加</string>
+    <string name="history_of_clothing">服の歴史</string>
+    <string name="clothing_list">服のリスト</string>
+
 
 </resources>

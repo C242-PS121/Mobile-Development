@@ -51,6 +51,19 @@
     <string name="phone_invalid">Le numéro de téléphone est invalide</string>
     <string name="phone_must_number">Vous ne pouvez saisir que des numéros</string>
     <string name="favorite_events">Événements favoris</string>
-    <string name="send_email">Send_email</string>
+    <string name="send_email">Envoyer un e-mail</string>
+    <string name="product_image">Image du Produit</string>
+    <string name="camera">Caméra</string>
+    <string name="gallery">Galerie</string>
+    <string name="description_hint">Écrivez la description de votre produit ici</string>
+    <string name="upload">Télécharger</string>
+    <string name="upload_product">Téléchargez Votre Produit</string>
+    <string name="product_name">Nom du Produit</string>
+    <string name="product_price">Prix</string>
+    <string name="product_clothing_type">Type de Vêtement</string>
+    <string name="button_add_product">Ajouter un Produit</string>
+    <string name="history_of_clothing">Histoire des Vêtements</string>
+    <string name="clothing_list">Liste de Vêtements</string>
+
 
 </resources>

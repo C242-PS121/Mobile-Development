@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.dicoding.thriftify.databinding.FragmentHomeBinding
 import com.dicoding.thriftify.ui.main.MainViewModel
+import com.dicoding.thriftify.ui.upload.UploadProductActivity
 import com.dicoding.thriftify.ui.welcome.WelcomeActivity
 import com.dicoding.thriftify.utils.ViewModelFactory
 
@@ -21,9 +22,6 @@ class HomeFragment : Fragment() {
     }
 
     private var _binding: FragmentHomeBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -41,20 +39,12 @@ class HomeFragment : Fragment() {
         homeViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
+        binding.buttonAdd.setOnClickListener {
+            val intent = Intent(requireContext(), UploadProductActivity::class.java)
+            startActivity(intent)
+        }
         return root
     }
-
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//
-//        binding.logoutButton.setOnClickListener {
-//            mainViewModel.logout()
-//            val intent = Intent(requireActivity(), WelcomeActivity::class.java)
-//            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-//            startActivity(intent)
-//            requireActivity().finish()
-//        }
-//    }
 
     override fun onDestroyView() {
         super.onDestroyView()

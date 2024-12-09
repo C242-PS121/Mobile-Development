@@ -50,7 +50,20 @@
     <string name="phone_empty">Nomor Telepon Teu Kenging Kosong</string>
     <string name="phone_invalid">Nomor Telepon Teu Valid</string>
     <string name="phone_must_number">Anjeun Ngan Bisa Ngetik Nomor</string>
-    <string name="favorite_events">Events Paporit</string>
-    <string name="send_email">Send_email</string>
+    <string name="favorite_events">Acara Paporit</string>
+    <string name="send_email">Kirim surélék</string>
+    <string name="product_image">Gambar Produk</string>
+    <string name="camera">Kamera</string>
+    <string name="gallery">Galeri</string>
+    <string name="description_hint">Tulis Pedaran Produk Anjeun Di Dieu</string>
+    <string name="upload">Unggah</string>
+    <string name="upload_product">Unggah Produk Anjeun</string>
+    <string name="product_name">Nami Produk</string>
+    <string name="product_price">Harga</string>
+    <string name="product_clothing_type">Jenis Pakéan</string>
+    <string name="button_add_product">Tambah Produk</string>
+    <string name="history_of_clothing">Sajarah Pakéan</string>
+    <string name="clothing_list">Daptar Pakéan</string>
+
 
 </resources>
