@@ -64,6 +64,10 @@
     <string name="button_add_product">Ajouter un Produit</string>
     <string name="history_of_clothing">Histoire des Vêtements</string>
     <string name="clothing_list">Liste de Vêtements</string>
-
+    <string name="empty_image_warning">Veuillez télécharger une image d\'abord !</string>
+    <string name="product_upload_success">Produit téléchargé avec succès</string>
+    <string name="user_not_found">Utilisateur non trouvé</string>
+    <string name="permission_denied">Permission refusée</string>
+    <string name="positive_button">Continuer</string>
 
 </resources>

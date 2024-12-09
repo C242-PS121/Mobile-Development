@@ -12,12 +12,14 @@ import com.dicoding.thriftify.data.remote.request.RegisterRequest
 import com.dicoding.thriftify.data.remote.response.LoginResponse
 import com.dicoding.thriftify.data.remote.response.LogoutResponse
 import com.dicoding.thriftify.data.remote.response.RegisterResponse
+import com.dicoding.thriftify.data.remote.response.UploadProductResponse
 import com.dicoding.thriftify.data.remote.response.UserResponse
 import com.dicoding.thriftify.data.remote.retrofit.ApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONException
@@ -114,6 +116,75 @@ class UserRepository private constructor(
                     emit(Result.Success(retryResponse))
                 } catch (retryException: Exception) {
                     emit(Result.Error("Failed after retry: ${retryException.message}"))
+                }
+            } else {
+                emit(Result.Error("HTTP Error: ${e.message}"))
+            }
+        } catch (e: IOException) {
+            emit(Result.Error("Network error: ${e.message}"))
+        } catch (e: Exception) {
+            emit(Result.Error("Unexpected error: ${e.message}"))
+        }
+    }
+
+    fun uploadProduct(
+        ownerId: String,
+        image: MultipartBody.Part,
+        name: String,
+        price: Int?,
+        description: String,
+        clothingType: String
+    ): LiveData<Result<UploadProductResponse>> = liveData(Dispatchers.IO) {
+        emit(Result.Loading)
+        try {
+            val session = userPreference.getSession().first()
+            val accessToken = "Bearer ${session.accessToken}"
+
+            val ownerIdBody = ownerId.toRequestBody("text/plain".toMediaTypeOrNull())
+            val nameBody = name.toRequestBody("text/plain".toMediaTypeOrNull())
+            val priceBody = price?.toString()?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val descriptionBody = description.toRequestBody("text/plain".toMediaTypeOrNull())
+            val clothingTypeBody = clothingType.toRequestBody("text/plain".toMediaTypeOrNull())
+
+            val response = apiService.uploadProduct(
+                ownerId = ownerIdBody,
+                image = image,
+                name = nameBody,
+                price = priceBody,
+                description = descriptionBody,
+                clothingType = clothingTypeBody,
+                accessToken = accessToken
+            )
+
+            emit(Result.Success(response))
+        } catch (e: HttpException) {
+            if (e.code() == 401) {
+                val session = userPreference.getSession().first()
+                val refreshResult = refreshAccessToken(session.refreshToken)
+                if (refreshResult is Result.Success) {
+                    val newAccessToken = "Bearer ${refreshResult.data}"
+                    try {
+                        val ownerIdBody = ownerId.toRequestBody("text/plain".toMediaTypeOrNull())
+                        val nameBody = name.toRequestBody("text/plain".toMediaTypeOrNull())
+                        val priceBody = price?.toString()?.toRequestBody("text/plain".toMediaTypeOrNull())
+                        val descriptionBody = description.toRequestBody("text/plain".toMediaTypeOrNull())
+                        val clothingTypeBody = clothingType.toRequestBody("text/plain".toMediaTypeOrNull())
+
+                        val retryResponse = apiService.uploadProduct(
+                            ownerId = ownerIdBody,
+                            image = image,
+                            name = nameBody,
+                            price = priceBody,
+                            description = descriptionBody,
+                            clothingType = clothingTypeBody,
+                            accessToken = newAccessToken
+                        )
+                        emit(Result.Success(retryResponse))
+                    } catch (retryException: Exception) {
+                        emit(Result.Error("Failed after retry: ${retryException.message}"))
+                    }
+                } else {
+                    emit(Result.Error("Failed to refresh token"))
                 }
             } else {
                 emit(Result.Error("HTTP Error: ${e.message}"))

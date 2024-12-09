@@ -63,5 +63,10 @@
     <string name="button_add_product">Add Product</string>
     <string name="history_of_clothing">History of Clothing</string>
     <string name="clothing_list">Clothing List</string>
+    <string name="empty_image_warning">Please Upload Image First!</string>
+    <string name="product_upload_success">Product Uploaded Successfully</string>
+    <string name="user_not_found">User Not Found</string>
+    <string name="permission_denied">Permission Denied</string>
+    <string name="positive_button">Continue</string>
 
 </resources>

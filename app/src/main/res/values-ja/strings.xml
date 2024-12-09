@@ -64,6 +64,11 @@
     <string name="button_add_product">製品を追加</string>
     <string name="history_of_clothing">服の歴史</string>
     <string name="clothing_list">服のリスト</string>
+    <string name="empty_image_warning">最初に画像をアップロードしてください！</string>
+    <string name="product_upload_success">製品が正常にアップロードされました</string>
+    <string name="user_not_found">ユーザーが見つかりません</string>
+    <string name="permission_denied">許可が拒否されました</string>
+    <string name="positive_button">続ける</string>
 
 
 </resources>

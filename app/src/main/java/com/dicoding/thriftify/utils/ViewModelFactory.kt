@@ -8,6 +8,7 @@ import com.dicoding.thriftify.di.Injection
 import com.dicoding.thriftify.ui.login.LoginViewModel
 import com.dicoding.thriftify.ui.main.MainViewModel
 import com.dicoding.thriftify.ui.register.RegisterViewModel
+import com.dicoding.thriftify.ui.upload.UploadProductViewModel
 
 
 class ViewModelFactory(private val repository: UserRepository) : ViewModelProvider.NewInstanceFactory() {
@@ -23,6 +24,9 @@ class ViewModelFactory(private val repository: UserRepository) : ViewModelProvid
             }
             modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
                 RegisterViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(UploadProductViewModel::class.java) -> {
+                UploadProductViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

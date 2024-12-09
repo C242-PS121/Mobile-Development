@@ -64,6 +64,11 @@
     <string name="button_add_product">Tambah Produk</string>
     <string name="history_of_clothing">Sejarah Pakaian</string>
     <string name="clothing_list">Daftar Pakaian</string>
+    <string name="empty_image_warning">Harap Unggah Gambar Terlebih Dahulu!</string>
+    <string name="product_upload_success">Produk Berhasil Diunggah</string>
+    <string name="user_not_found">Pengguna Tidak Ditemukan</string>
+    <string name="permission_denied">Izin Ditolak</string>
+    <string name="positive_button">Lanjutkan</string>
 
 
 </resources>
