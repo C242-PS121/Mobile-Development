@@ -128,6 +128,39 @@ class UserRepository private constructor(
         }
     }
 
+    fun getProductDetails(productId: String): LiveData<Result<DetailProductResponse>> = liveData(Dispatchers.IO) {
+        emit(Result.Loading)
+        try {
+            val session = userPreference.getSession().first()
+            val accessToken = "Bearer ${session.accessToken}"
+            val response = apiService.getProductDetails(productId, accessToken)
+            emit(Result.Success(response))
+        } catch (e: HttpException) {
+            if (e.code() == 401) {
+                val session = userPreference.getSession().first()
+                val refreshResult = refreshAccessToken(session.refreshToken)
+                if (refreshResult is Result.Success) {
+                    val newAccessToken = "Bearer ${refreshResult.data}"
+                    try {
+                        val retryResponse = apiService.getProductDetails(productId, newAccessToken)
+                        emit(Result.Success(retryResponse))
+                    } catch (retryException: Exception) {
+                        emit(Result.Error("Failed after retry: ${retryException.message}"))
+                    }
+                } else {
+                    emit(Result.Error("Failed to refresh token"))
+                }
+            } else {
+                emit(Result.Error("HTTP Error: ${e.message}"))
+            }
+        } catch (e: IOException) {
+            emit(Result.Error("Network error: ${e.message}"))
+        } catch (e: Exception) {
+            emit(Result.Error("Unexpected error: ${e.message}"))
+        }
+    }
+
+
     fun getAllProducts(): LiveData<Result<List<Product>>> = liveData(Dispatchers.IO) {
         emit(Result.Loading)
         try {
@@ -213,42 +246,6 @@ class UserRepository private constructor(
                             description = descriptionBody,
                             clothingType = clothingTypeBody,
                             accessToken = newAccessToken
-                        )
-                        emit(Result.Success(retryResponse))
-                    } catch (retryException: Exception) {
-                        emit(Result.Error("Failed after retry: ${retryException.message}"))
-                    }
-                } else {
-                    emit(Result.Error("Failed to refresh token"))
-                }
-            } else {
-                emit(Result.Error("HTTP Error: ${e.message}"))
-            }
-        } catch (e: IOException) {
-            emit(Result.Error("Network error: ${e.message}"))
-        } catch (e: Exception) {
-            emit(Result.Error("Unexpected error: ${e.message}"))
-        }
-    }
-
-    fun getProductDetails(productId: String): LiveData<Result<DetailProductResponse>> = liveData(Dispatchers.IO) {
-        emit(Result.Loading)
-        try {
-            val session = userPreference.getSession().first()
-            val accessToken = "Bearer ${session.accessToken}"
-            val response = apiService.getProductDetails(
-                productId = productId
-            )
-            emit(Result.Success(response))
-        } catch (e: HttpException) {
-            if (e.code() == 401) {
-                val session = userPreference.getSession().first()
-                val refreshResult = refreshAccessToken(session.refreshToken)
-                if (refreshResult is Result.Success) {
-                    val newAccessToken = "Bearer ${refreshResult.data}"
-                    try {
-                        val retryResponse = apiService.getProductDetails(
-                            productId = productId
                         )
                         emit(Result.Success(retryResponse))
                     } catch (retryException: Exception) {

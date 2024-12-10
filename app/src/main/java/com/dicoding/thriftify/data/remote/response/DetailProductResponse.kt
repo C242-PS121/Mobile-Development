@@ -1,5 +1,10 @@
 package com.dicoding.thriftify.data.remote.response
 
+
+data class Detail(
+    val detailProduct: List<DetailProductResponse>
+)
+
 data class DetailProductResponse(
     val id: String,
     val ownerId: String,
