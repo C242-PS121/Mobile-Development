@@ -12,12 +12,10 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-
-import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.dicoding.thriftify.R
 import com.dicoding.thriftify.data.Result
-import com.dicoding.thriftify.data.remote.response.Product
+import com.dicoding.thriftify.data.remote.response.DetailProductResponse
 import com.dicoding.thriftify.ui.main.MainViewModel
 import com.dicoding.thriftify.utils.ViewModelFactory
 import com.google.android.material.button.MaterialButton
@@ -27,11 +25,11 @@ class DetailFragment : Fragment() {
     private lateinit var imageView: ImageView
     private lateinit var nameTextView: TextView
     private lateinit var priceTextView: TextView
+    private lateinit var clothingTypeTextView: TextView
     private lateinit var descriptionTextView: TextView
     private lateinit var emailButton: MaterialButton
     private lateinit var whatsappButton: MaterialButton
 
-    private var currentProduct: Product? = null
     private lateinit var mainViewModel: MainViewModel
 
     override fun onCreateView(
@@ -44,6 +42,7 @@ class DetailFragment : Fragment() {
         imageView = view.findViewById(R.id.imageLogo)
         nameTextView = view.findViewById(R.id.eventName)
         priceTextView = view.findViewById(R.id.price)
+        clothingTypeTextView = view.findViewById(R.id.clothing_type)
         descriptionTextView = view.findViewById(R.id.description)
         emailButton = view.findViewById(R.id.emailButton)
         whatsappButton = view.findViewById(R.id.whatsappButton)
@@ -60,9 +59,7 @@ class DetailFragment : Fragment() {
     private fun observeProductDetails(productId: String) {
         mainViewModel.getProductDetails(productId).observe(viewLifecycleOwner) { result ->
             when (result) {
-                is Result.Loading -> {
-                    progressBar.visibility = View.VISIBLE
-                }
+                is Result.Loading -> progressBar.visibility = View.VISIBLE
                 is Result.Success -> {
                     progressBar.visibility = View.GONE
                     displayProductDetails(result.data)
@@ -75,33 +72,29 @@ class DetailFragment : Fragment() {
         }
     }
 
-    private fun displayProductDetails(product: Product) {
-        currentProduct = product
+    private fun displayProductDetails(product: DetailProductResponse) {
         Glide.with(this)
-            .load(product.imageUrl)
+            .load(product.mainImgUrl)
             .into(imageView)
 
         nameTextView.text = product.name
-        priceTextView.text = getString(R.string.product_price)
+        priceTextView.text = product.price.toString()
+        clothingTypeTextView.text = product.clothingType
         descriptionTextView.text = product.description
 
         emailButton.setOnClickListener {
             val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
                 data = Uri.parse("mailto:")
-                putExtra(Intent.EXTRA_EMAIL, arrayOf(product.sellerEmail))
+                putExtra(Intent.EXTRA_EMAIL, arrayOf(""))
                 putExtra(Intent.EXTRA_SUBJECT, "Inquiry about ${product.name}")
             }
             startActivity(emailIntent)
         }
 
         whatsappButton.setOnClickListener {
-            val whatsappUri = Uri.parse("https://wa.me/${product.sellerPhone}")
+            val whatsappUri = Uri.parse("https://wa.me/")
             val whatsappIntent = Intent(Intent.ACTION_VIEW, whatsappUri)
             startActivity(whatsappIntent)
         }
-    }
-
-    private fun showLoading(isLoading: Boolean) {
-        progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }

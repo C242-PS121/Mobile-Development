@@ -9,6 +9,7 @@ import com.dicoding.thriftify.data.pref.UserModel
 import com.dicoding.thriftify.data.pref.UserPreference
 import com.dicoding.thriftify.data.remote.request.LoginRequest
 import com.dicoding.thriftify.data.remote.request.RegisterRequest
+import com.dicoding.thriftify.data.remote.response.DetailProductResponse
 import com.dicoding.thriftify.data.remote.response.LoginResponse
 import com.dicoding.thriftify.data.remote.response.LogoutResponse
 import com.dicoding.thriftify.data.remote.response.Product
@@ -21,7 +22,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONException
 import org.json.JSONObject
@@ -230,13 +230,15 @@ class UserRepository private constructor(
             emit(Result.Error("Unexpected error: ${e.message}"))
         }
     }
-    fun getProductDetails(productId: String): LiveData<Result<Product>> = liveData(Dispatchers.IO) {
+
+    fun getProductDetails(productId: String): LiveData<Result<DetailProductResponse>> = liveData(Dispatchers.IO) {
         emit(Result.Loading)
         try {
             val session = userPreference.getSession().first()
             val accessToken = "Bearer ${session.accessToken}"
-
-            val response = apiService.getProductDetails(productId, accessToken)
+            val response = apiService.getProductDetails(
+                productId = productId
+            )
             emit(Result.Success(response))
         } catch (e: HttpException) {
             if (e.code() == 401) {
@@ -245,7 +247,9 @@ class UserRepository private constructor(
                 if (refreshResult is Result.Success) {
                     val newAccessToken = "Bearer ${refreshResult.data}"
                     try {
-                        val retryResponse = apiService.getProductDetails(productId, newAccessToken)
+                        val retryResponse = apiService.getProductDetails(
+                            productId = productId
+                        )
                         emit(Result.Success(retryResponse))
                     } catch (retryException: Exception) {
                         emit(Result.Error("Failed after retry: ${retryException.message}"))

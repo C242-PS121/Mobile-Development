@@ -2,6 +2,7 @@ package com.dicoding.thriftify.data.remote.retrofit
 
 import com.dicoding.thriftify.data.remote.request.LoginRequest
 import com.dicoding.thriftify.data.remote.request.RegisterRequest
+import com.dicoding.thriftify.data.remote.response.DetailProductResponse
 import com.dicoding.thriftify.data.remote.response.LoginResponse
 import com.dicoding.thriftify.data.remote.response.LogoutResponse
 import com.dicoding.thriftify.data.remote.response.Product
@@ -65,9 +66,9 @@ interface ApiService {
 
     @GET("products/{id}")
     suspend fun getProductDetails(
-        @Path("id") productId: String,
-        @Header("Authorization") accessToken: String
-    ): Product
+        @Path("id") productId: String
+    ): DetailProductResponse
+
 
     @POST("auth/logout")
     suspend fun logout(@Body requestBody: RequestBody): LogoutResponse

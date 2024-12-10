@@ -14,3 +14,4 @@ data class Product(
     val imageUrl: String,
     val sellerPhone: String
 )
+
