@@ -58,7 +58,7 @@
     <string name="upload">Upload</string>
     <string name="upload_product">Upload Your Product</string>
     <string name="product_name">Product Name</string>
-    <string name="product_price">Price</string>
+    <string name="product_price">Price </string>
     <string name="product_clothing_type">Clothing Type</string>
     <string name="button_add_product">Add Product</string>
     <string name="history_of_clothing">History of Clothing</string>
@@ -70,5 +70,6 @@
     <string name="positive_button">Continue</string>
     <string name="owner">Owner</string>
     <string name="whatsapp">WhatsApp</string>
+    <string name="title_detail">Detail Title</string>
 
 </resources>

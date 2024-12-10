@@ -4,6 +4,7 @@ import com.dicoding.thriftify.data.remote.request.LoginRequest
 import com.dicoding.thriftify.data.remote.request.RegisterRequest
 import com.dicoding.thriftify.data.remote.response.LoginResponse
 import com.dicoding.thriftify.data.remote.response.LogoutResponse
+import com.dicoding.thriftify.data.remote.response.Product
 import com.dicoding.thriftify.data.remote.response.ProductListResponse
 import com.dicoding.thriftify.data.remote.response.RefreshTokenResponse
 import com.dicoding.thriftify.data.remote.response.RegisterResponse
@@ -61,6 +62,12 @@ interface ApiService {
         @Part("clothing_type") clothingType: RequestBody,
         @Header("Authorization") accessToken: String
     ): UploadProductResponse
+
+    @GET("products/{id}")
+    suspend fun getProductDetails(
+        @Path("id") productId: String,
+        @Header("Authorization") accessToken: String
+    ): Product
 
     @POST("auth/logout")
     suspend fun logout(@Body requestBody: RequestBody): LogoutResponse

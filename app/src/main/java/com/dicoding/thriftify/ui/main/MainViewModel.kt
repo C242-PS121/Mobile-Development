@@ -20,6 +20,10 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
         return repository.getAllProducts()
     }
 
+    fun getProductDetails(productId: String): LiveData<Result<Product>> {
+        return repository.getProductDetails(productId)
+    }
+
     fun logout(): LiveData<Result<LogoutResponse>> {
         return repository.logout()
     }
