@@ -1,8 +1,8 @@
 package com.dicoding.thriftify.data.remote.retrofit
 
+import DetailProductResponse
 import com.dicoding.thriftify.data.remote.request.LoginRequest
 import com.dicoding.thriftify.data.remote.request.RegisterRequest
-import com.dicoding.thriftify.data.remote.response.DetailProductResponse
 import com.dicoding.thriftify.data.remote.response.LoginResponse
 import com.dicoding.thriftify.data.remote.response.LogoutResponse
 import com.dicoding.thriftify.data.remote.response.ProductListResponse
@@ -46,9 +46,7 @@ interface ApiService {
 
     @GET("products")
     suspend fun getAllProducts(
-        @Header("Authorization") accessToken: String,
-        @Query("page") page: Int = 1,
-        @Query("size") size: Int = 20
+        @Header("Authorization") accessToken: String
     ): ProductListResponse
 
     @POST("v2/products")
@@ -63,11 +61,18 @@ interface ApiService {
         @Header("Authorization") accessToken: String
     ): UploadProductResponse
 
+//    @GET("products/{id}")
+//    suspend fun getProductDetails(
+//        @Header("Authorization") accessToken: String,
+//        @Path("id") productId: String
+//    ): DetailProductResponse
+
     @GET("products/{id}")
-    suspend fun getProductDetails(
-        @Header("Authorization") accessToken: String,
-        @Path("id") productId: String
+    suspend fun getProductById(
+        @Path("id") productId: String,
+        @Header("Authorization") accessToken: String
     ): DetailProductResponse
+
 
     @POST("auth/logout")
     suspend fun logout(@Body requestBody: RequestBody): LogoutResponse

@@ -1,6 +1,8 @@
 package com.dicoding.thriftify.data
 
 
+import DetailProductResponse
+import ProductDetail
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
@@ -9,7 +11,6 @@ import com.dicoding.thriftify.data.pref.UserModel
 import com.dicoding.thriftify.data.pref.UserPreference
 import com.dicoding.thriftify.data.remote.request.LoginRequest
 import com.dicoding.thriftify.data.remote.request.RegisterRequest
-import com.dicoding.thriftify.data.remote.response.DetailProductResponse
 import com.dicoding.thriftify.data.remote.response.LoginResponse
 import com.dicoding.thriftify.data.remote.response.LogoutResponse
 import com.dicoding.thriftify.data.remote.response.Product
@@ -128,13 +129,13 @@ class UserRepository private constructor(
         }
     }
 
-    fun getProductDetails(productId: String): LiveData<Result<DetailProductResponse>> = liveData(Dispatchers.IO) {
+    fun getProductById(productId: String): LiveData<Result<ProductDetail>> = liveData(Dispatchers.IO) {
         emit(Result.Loading)
         try {
             val session = userPreference.getSession().first()
             val accessToken = "Bearer ${session.accessToken}"
-            val response = apiService.getProductDetails(productId, accessToken)
-            emit(Result.Success(response))
+            val response = apiService.getProductById(productId, accessToken)
+            emit(Result.Success(response.data))
         } catch (e: HttpException) {
             if (e.code() == 401) {
                 val session = userPreference.getSession().first()
@@ -142,8 +143,8 @@ class UserRepository private constructor(
                 if (refreshResult is Result.Success) {
                     val newAccessToken = "Bearer ${refreshResult.data}"
                     try {
-                        val retryResponse = apiService.getProductDetails(productId, newAccessToken)
-                        emit(Result.Success(retryResponse))
+                        val retryResponse = apiService.getProductById(productId, newAccessToken)
+                        emit(Result.Success(retryResponse.data))
                     } catch (retryException: Exception) {
                         emit(Result.Error("Failed after retry: ${retryException.message}"))
                     }
