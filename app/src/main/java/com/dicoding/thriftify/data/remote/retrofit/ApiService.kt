@@ -65,8 +65,8 @@ interface ApiService {
 
     @GET("products/{id}")
     suspend fun getProductDetails(
-        @Path("id") productId: String,
-        s: String
+        @Header("Authorization") accessToken: String,
+        @Path("id") productId: String
     ): DetailProductResponse
 
     @POST("auth/logout")
