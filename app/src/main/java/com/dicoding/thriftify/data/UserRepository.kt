@@ -230,6 +230,38 @@ class UserRepository private constructor(
             emit(Result.Error("Unexpected error: ${e.message}"))
         }
     }
+    fun getProductDetails(productId: String): LiveData<Result<Product>> = liveData(Dispatchers.IO) {
+        emit(Result.Loading)
+        try {
+            val session = userPreference.getSession().first()
+            val accessToken = "Bearer ${session.accessToken}"
+
+            val response = apiService.getProductDetails(productId, accessToken)
+            emit(Result.Success(response))
+        } catch (e: HttpException) {
+            if (e.code() == 401) {
+                val session = userPreference.getSession().first()
+                val refreshResult = refreshAccessToken(session.refreshToken)
+                if (refreshResult is Result.Success) {
+                    val newAccessToken = "Bearer ${refreshResult.data}"
+                    try {
+                        val retryResponse = apiService.getProductDetails(productId, newAccessToken)
+                        emit(Result.Success(retryResponse))
+                    } catch (retryException: Exception) {
+                        emit(Result.Error("Failed after retry: ${retryException.message}"))
+                    }
+                } else {
+                    emit(Result.Error("Failed to refresh token"))
+                }
+            } else {
+                emit(Result.Error("HTTP Error: ${e.message}"))
+            }
+        } catch (e: IOException) {
+            emit(Result.Error("Network error: ${e.message}"))
+        } catch (e: Exception) {
+            emit(Result.Error("Unexpected error: ${e.message}"))
+        }
+    }
 
 
     suspend fun saveSession(user: UserModel) {
