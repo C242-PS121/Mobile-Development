@@ -4,6 +4,7 @@ import com.dicoding.thriftify.data.remote.request.LoginRequest
 import com.dicoding.thriftify.data.remote.request.RegisterRequest
 import com.dicoding.thriftify.data.remote.response.LoginResponse
 import com.dicoding.thriftify.data.remote.response.LogoutResponse
+import com.dicoding.thriftify.data.remote.response.ProductListResponse
 import com.dicoding.thriftify.data.remote.response.RefreshTokenResponse
 import com.dicoding.thriftify.data.remote.response.RegisterResponse
 import com.dicoding.thriftify.data.remote.response.UploadProductResponse
@@ -18,6 +19,7 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Part
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
     @POST("users")
@@ -40,6 +42,13 @@ interface ApiService {
         @Path("id") userId: String,
         @Header("Authorization") accessToken: String
     ): UserResponse
+
+    @GET("products")
+    suspend fun getAllProducts(
+        @Header("Authorization") accessToken: String,
+        @Query("page") page: Int = 1,
+        @Query("size") size: Int = 20
+    ): ProductListResponse
 
     @POST("v2/products")
     @Multipart

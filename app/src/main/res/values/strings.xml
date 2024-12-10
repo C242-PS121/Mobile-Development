@@ -68,5 +68,7 @@
     <string name="user_not_found">User Not Found</string>
     <string name="permission_denied">Permission Denied</string>
     <string name="positive_button">Continue</string>
+    <string name="owner">Owner</string>
+    <string name="whatsapp">WhatsApp</string>
 
 </resources>

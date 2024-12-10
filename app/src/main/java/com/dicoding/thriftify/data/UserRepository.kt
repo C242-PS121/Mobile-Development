@@ -11,6 +11,7 @@ import com.dicoding.thriftify.data.remote.request.LoginRequest
 import com.dicoding.thriftify.data.remote.request.RegisterRequest
 import com.dicoding.thriftify.data.remote.response.LoginResponse
 import com.dicoding.thriftify.data.remote.response.LogoutResponse
+import com.dicoding.thriftify.data.remote.response.Product
 import com.dicoding.thriftify.data.remote.response.RegisterResponse
 import com.dicoding.thriftify.data.remote.response.UploadProductResponse
 import com.dicoding.thriftify.data.remote.response.UserResponse
@@ -126,6 +127,40 @@ class UserRepository private constructor(
             emit(Result.Error("Unexpected error: ${e.message}"))
         }
     }
+
+    fun getAllProducts(): LiveData<Result<List<Product>>> = liveData(Dispatchers.IO) {
+        emit(Result.Loading)
+        try {
+            val session = userPreference.getSession().first()
+            val accessToken = "Bearer ${session.accessToken}"
+
+            val response = apiService.getAllProducts(accessToken)
+            emit(Result.Success(response.data))
+        } catch (e: HttpException) {
+            if (e.code() == 401) {
+                val session = userPreference.getSession().first()
+                val refreshResult = refreshAccessToken(session.refreshToken)
+                if (refreshResult is Result.Success) {
+                    val newAccessToken = "Bearer ${refreshResult.data}"
+                    try {
+                        val retryResponse = apiService.getAllProducts(newAccessToken)
+                        emit(Result.Success(retryResponse.data))
+                    } catch (retryException: Exception) {
+                        emit(Result.Error("Failed after retry: ${retryException.message}"))
+                    }
+                } else {
+                    emit(Result.Error("Failed to refresh token"))
+                }
+            } else {
+                emit(Result.Error("HTTP Error: ${e.message}"))
+            }
+        } catch (e: IOException) {
+            emit(Result.Error("Network error: ${e.message}"))
+        } catch (e: Exception) {
+            emit(Result.Error("Unexpected error: ${e.message}"))
+        }
+    }
+
 
     fun uploadProduct(
         ownerId: String,
