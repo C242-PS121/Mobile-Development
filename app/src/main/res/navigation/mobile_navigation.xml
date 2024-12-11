@@ -24,12 +24,6 @@
         tools:layout="@layout/fragment_search" />
 
     <fragment
-        android:id="@+id/navigation_favorite"
-        android:name="com.dicoding.thriftify.ui.favorite.FavoriteFragment"
-        android:label="@string/favorite"
-        tools:layout="@layout/fragment_favorite" />
-
-    <fragment
         android:id="@+id/navigation_account"
         android:name="com.dicoding.thriftify.ui.account.AccountFragment"
         android:label="@string/account"

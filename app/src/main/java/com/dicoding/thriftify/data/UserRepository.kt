@@ -167,9 +167,10 @@ class UserRepository private constructor(
         try {
             val session = userPreference.getSession().first()
             val accessToken = "Bearer ${session.accessToken}"
-
             val response = apiService.getAllProducts(accessToken)
-            emit(Result.Success(response.data))
+
+            val sortedProducts = response.data.sortedByDescending { it.id }
+            emit(Result.Success(sortedProducts))
         } catch (e: HttpException) {
             if (e.code() == 401) {
                 val session = userPreference.getSession().first()
