@@ -16,9 +16,6 @@
         android:name="com.dicoding.thriftify.ui.detail.DetailFragment"
         android:label="@string/title_detail"
         tools:layout="@layout/fragment_detail" />
-    <action
-        android:id="@+id/action_navigation_home_to_navigation_detail"
-        app:destination="@id/navigation_detail" />
 
     <fragment
         android:id="@+id/navigation_search"

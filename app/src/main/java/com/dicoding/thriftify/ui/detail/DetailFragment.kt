@@ -5,13 +5,15 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.dicoding.thriftify.R
 import com.dicoding.thriftify.data.Result
 import com.dicoding.thriftify.databinding.FragmentDetailBinding
 import com.dicoding.thriftify.ui.main.MainViewModel
@@ -34,9 +36,17 @@ class DetailFragment : Fragment() {
         return binding.root
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        setHasOptionsMenu(true)
+        val actionBar = (activity as AppCompatActivity).supportActionBar
+        actionBar?.title = "Detail Produk"
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+        (activity as AppCompatActivity).supportActionBar?.setHomeButtonEnabled(true)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val productId = arguments?.getString("PRODUCT_ID") ?: return
 
         mainViewModel.getProductById(productId).observe(viewLifecycleOwner) { result ->
@@ -83,7 +93,7 @@ class DetailFragment : Fragment() {
             }
 
             whatsappButton.setOnClickListener {
-                val whatsappUri = Uri.parse("https://wa.me/")
+                val whatsappUri = Uri.parse("https://wa.me/+62875000527")
                 val whatsappIntent = Intent(Intent.ACTION_VIEW, whatsappUri)
                 startActivity(whatsappIntent)
             }
@@ -91,6 +101,16 @@ class DetailFragment : Fragment() {
         Glide.with(this)
             .load(product.mainImageUrl)
             .into(binding.imageLogo)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                findNavController().navigateUp()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onDestroyView() {

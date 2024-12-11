@@ -49,7 +49,7 @@ class HomeFragment : Fragment() {
             val bundle = Bundle().apply {
                 putString("PRODUCT_ID", product.id)
             }
-            findNavController().navigate(R.id.action_navigation_home_to_navigation_detail, bundle)
+            findNavController().navigate(R.id.navigation_detail, bundle)
         }
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
