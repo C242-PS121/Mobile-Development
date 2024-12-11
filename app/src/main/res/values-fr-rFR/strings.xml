@@ -73,6 +73,6 @@
     <string name="whatsapp">WhatsApp</string>
     <string name="title_detail">Titre Détail</string>
     <string name="phone_hint">Préfixez avec le code du pays (exemple : 62xxxxx)</string>
-
+    <string name="purchase_message">Bonjour %1$s, je souhaiterais acheter %2$s au prix proposé sur l\'application Thriftify Rp. \"%3$d\".</string>
 
 </resources>

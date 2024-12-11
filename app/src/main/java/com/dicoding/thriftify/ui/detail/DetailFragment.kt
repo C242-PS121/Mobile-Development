@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.dicoding.thriftify.R
 import com.dicoding.thriftify.data.Result
 import com.dicoding.thriftify.data.remote.response.UserData
 import com.dicoding.thriftify.databinding.FragmentDetailBinding
@@ -97,6 +98,7 @@ class DetailFragment : Fragment() {
     }
 
     private fun displayProductDetails(product: ProductDetail, user: UserData) {
+        val purchaseMessage = getString(R.string.purchase_message, user.fullname, product.name, product.price)
         binding.apply {
             eventName.text = product.name
             ownerName.text = "${user.fullname}"
@@ -105,16 +107,17 @@ class DetailFragment : Fragment() {
             description.text = product.description
 
             emailButton.setOnClickListener {
-                val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
-                    data = Uri.parse("mailto: ${user.email}")
-                    putExtra(Intent.EXTRA_EMAIL, arrayOf(""))
+                val emailIntent = Intent(Intent.ACTION_SEND).apply {
+                    type = "message/rfc822"
+                    putExtra(Intent.EXTRA_EMAIL, arrayOf(user.email))
                     putExtra(Intent.EXTRA_SUBJECT, "Inquiry about ${product.name}")
+                    putExtra(Intent.EXTRA_TEXT, purchaseMessage)
                 }
-                startActivity(emailIntent)
+                startActivity(Intent.createChooser(emailIntent, "Choose an Email client :"))
             }
 
             whatsappButton.setOnClickListener {
-                val whatsappUri = Uri.parse("https://wa.me/${user.phone}")
+                val whatsappUri = Uri.parse("https://wa.me/${user.phone}?text=${Uri.encode(purchaseMessage)}")
                 val whatsappIntent = Intent(Intent.ACTION_VIEW, whatsappUri)
                 startActivity(whatsappIntent)
             }

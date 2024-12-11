@@ -73,6 +73,6 @@
     <string name="whatsapp">WhatsApp</string>
     <string name="title_detail">Judul Detail</string>
     <string name="phone_hint">Awali dengan kode negara (contoh: 62xxxxx)</string>
-
+    <string name="purchase_message">Halo %1$s, saya ingin membeli %2$s dengan harga yang ditawarkan di Aplikasi Thriftify Rp. \"%3$d\".</string>
 
 </resources>

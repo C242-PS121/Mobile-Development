@@ -73,6 +73,6 @@
     <string name="whatsapp">WhatsApp</string>
     <string name="title_detail">詳細タイトル</string>
     <string name="phone_hint">国コードで始めてください（例: 62xxxxx）</string>
-
+    <string name="purchase_message">%1$s様、Thriftifyアプリで提示されている価格 Rp. \"%3$d\"で%2$sを購入したいです。</string>
 
 </resources>
