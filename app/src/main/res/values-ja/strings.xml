@@ -69,6 +69,10 @@
     <string name="user_not_found">ユーザーが見つかりません</string>
     <string name="permission_denied">許可が拒否されました</string>
     <string name="positive_button">続ける</string>
+    <string name="owner">オーナー</string>
+    <string name="whatsapp">WhatsApp</string>
+    <string name="title_detail">詳細タイトル</string>
+    <string name="phone_hint">国コードで始めてください（例: 62xxxxx）</string>
 
 
 </resources>

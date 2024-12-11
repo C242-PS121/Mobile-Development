@@ -69,6 +69,10 @@
     <string name="user_not_found">Pengguna Tidak Ditemukan</string>
     <string name="permission_denied">Izin Ditolak</string>
     <string name="positive_button">Lanjutkan</string>
+    <string name="owner">Pemilik</string>
+    <string name="whatsapp">WhatsApp</string>
+    <string name="title_detail">Judul Detail</string>
+    <string name="phone_hint">Awali dengan kode negara (contoh: 62xxxxx)</string>
 
 
 </resources>

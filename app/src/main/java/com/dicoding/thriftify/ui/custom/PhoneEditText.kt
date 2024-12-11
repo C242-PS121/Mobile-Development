@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
+import androidx.core.content.ContextCompat
 import com.dicoding.thriftify.R
 import com.google.android.material.textfield.TextInputEditText
 
@@ -34,6 +35,14 @@ class PhoneEditText @JvmOverloads constructor(
 
             override fun afterTextChanged(s: Editable?) {}
         })
+
+        val hintTextSize = 14f
+        setTextSize(TypedValue.COMPLEX_UNIT_SP, hintTextSize)
+
+        val hintColor = ContextCompat.getColor(context, R.color.black)
+        setHintTextColor(hintColor)
+
+        setHint(R.string.phone_hint)
     }
 
     private fun isValidPhoneNumber(phoneNumber: String): Boolean {

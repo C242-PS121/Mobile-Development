@@ -69,5 +69,10 @@
     <string name="user_not_found">Pamaké Teu Kapanggih</string>
     <string name="permission_denied">Idin Ditolak</string>
     <string name="positive_button">Teruskeun</string>
+    <string name="owner">Nu Boga</string>
+    <string name="whatsapp">WhatsApp</string>
+    <string name="title_detail">Judul Detil</string>
+    <string name="phone_hint">Awalan ku kode nagara (contoh: 62xxxxx)</string>
+
 
 </resources>

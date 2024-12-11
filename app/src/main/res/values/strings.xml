@@ -71,5 +71,6 @@
     <string name="owner">Owner</string>
     <string name="whatsapp">WhatsApp</string>
     <string name="title_detail">Detail Title</string>
+    <string name="phone_hint">Prefix with country code (example: 62xxxxx)</string>
 
 </resources>
