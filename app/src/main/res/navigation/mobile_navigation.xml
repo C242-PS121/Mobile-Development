@@ -18,12 +18,6 @@
         tools:layout="@layout/fragment_detail" />
 
     <fragment
-        android:id="@+id/navigation_search"
-        android:name="com.dicoding.thriftify.ui.search.SearchFragment"
-        android:label="@string/search"
-        tools:layout="@layout/fragment_search" />
-
-    <fragment
         android:id="@+id/navigation_account"
         android:name="com.dicoding.thriftify.ui.account.AccountFragment"
         android:label="@string/account"
