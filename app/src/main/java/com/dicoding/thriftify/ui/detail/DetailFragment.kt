@@ -15,6 +15,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.dicoding.thriftify.data.Result
+import com.dicoding.thriftify.data.remote.response.UserData
 import com.dicoding.thriftify.databinding.FragmentDetailBinding
 import com.dicoding.thriftify.ui.main.MainViewModel
 import com.dicoding.thriftify.utils.ViewModelFactory
@@ -54,7 +55,25 @@ class DetailFragment : Fragment() {
                 is Result.Loading -> showLoading(true)
                 is Result.Success -> {
                     showLoading(false)
-                    displayProductDetails(result.data)
+                    val product = result.data
+                    mainViewModel.getSession().observe(viewLifecycleOwner) { userSession ->
+                        val token = userSession.accessToken
+                        mainViewModel.getUserById(product.ownerId, token)
+                            .observe(viewLifecycleOwner) { userResult ->
+                                when (userResult) {
+                                    is Result.Loading -> showLoading(true)
+                                    is Result.Success -> {
+                                        showLoading(false)
+                                        val userData = userResult.data.data
+                                        displayProductDetails(product, userData)
+                                    }
+                                    is Result.Error -> {
+                                        showLoading(false)
+                                        showError(userResult.error)
+                                    }
+                                }
+                            }
+                    }
                 }
                 is Result.Error -> {
                     showLoading(false)
@@ -63,6 +82,7 @@ class DetailFragment : Fragment() {
             }
         }
     }
+
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
@@ -76,16 +96,17 @@ class DetailFragment : Fragment() {
             .show()
     }
 
-    private fun displayProductDetails(product: ProductDetail) {
+    private fun displayProductDetails(product: ProductDetail, user: UserData) {
         binding.apply {
             eventName.text = product.name
+            ownerName.text = "${product.ownerId}"
             price.text = "Rp. ${product.price}"
             clothingType.text = product.clothingType
             description.text = product.description
 
             emailButton.setOnClickListener {
                 val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
-                    data = Uri.parse("mailto:")
+                    data = Uri.parse("mailto: ${user.email}")
                     putExtra(Intent.EXTRA_EMAIL, arrayOf(""))
                     putExtra(Intent.EXTRA_SUBJECT, "Inquiry about ${product.name}")
                 }
@@ -93,7 +114,7 @@ class DetailFragment : Fragment() {
             }
 
             whatsappButton.setOnClickListener {
-                val whatsappUri = Uri.parse("https://wa.me/+62875000527")
+                val whatsappUri = Uri.parse("https://wa.me/${user.phone}")
                 val whatsappIntent = Intent(Intent.ACTION_VIEW, whatsappUri)
                 startActivity(whatsappIntent)
             }

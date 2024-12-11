@@ -25,7 +25,6 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
         return repository.getProductById(productId)
     }
 
-
     fun logout(): LiveData<Result<LogoutResponse>> {
         return repository.logout()
     }
