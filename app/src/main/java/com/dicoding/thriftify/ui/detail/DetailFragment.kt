@@ -99,7 +99,7 @@ class DetailFragment : Fragment() {
     private fun displayProductDetails(product: ProductDetail, user: UserData) {
         binding.apply {
             eventName.text = product.name
-            ownerName.text = "${product.ownerId}"
+            ownerName.text = "${user.fullname}"
             price.text = "Rp. ${product.price}"
             clothingType.text = product.clothingType
             description.text = product.description
@@ -114,7 +114,7 @@ class DetailFragment : Fragment() {
             }
 
             whatsappButton.setOnClickListener {
-                val whatsappUri = Uri.parse("https://wa.me/${user.phone}")
+                val whatsappUri = Uri.parse("https://wa.me/+62${user.phone}")
                 val whatsappIntent = Intent(Intent.ACTION_VIEW, whatsappUri)
                 startActivity(whatsappIntent)
             }
