@@ -10,6 +10,7 @@ object Injection {
     fun provideRepository(context: Context): UserRepository {
         val pref = UserPreference.getInstance(context.dataStore)
         val apiService = ApiConfig.getApiService()
-        return UserRepository.getInstance(context, pref, apiService)
+        val mlApiService = ApiConfig.getMlApiService()
+        return UserRepository.getInstance(context, pref, apiService, mlApiService)
     }
 }

@@ -13,14 +13,18 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.dicoding.thriftify.R
 import com.dicoding.thriftify.databinding.ActivityUploadProductBinding
 import com.dicoding.thriftify.utils.getImageUri
 import com.dicoding.thriftify.utils.reduceFileImage
 import com.dicoding.thriftify.utils.uriToFile
 import com.dicoding.thriftify.data.Result
+import com.dicoding.thriftify.data.remote.response.MlResponse
+import com.dicoding.thriftify.data.remote.retrofit.ApiConfig
 import com.dicoding.thriftify.ui.main.MainActivity
 import com.dicoding.thriftify.utils.ViewModelFactory
+import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -29,6 +33,7 @@ class UploadProductActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUploadProductBinding
     private var currentImageUri: Uri? = null
     private lateinit var uploadProductViewModel: UploadProductViewModel
+    private val mlApiService = ApiConfig.getMlApiService()
 
     private fun allPermissionsGranted() =
         ContextCompat.checkSelfPermission(
@@ -121,29 +126,50 @@ class UploadProductActivity : AppCompatActivity() {
         currentImageUri?.let { uri ->
             val file = uriToFile(uri, this).reduceFileImage()
             val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
-            val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
+            val imageMultipartForMl: MultipartBody.Part = MultipartBody.Part.createFormData(
+                "file",
+                file.name,
+                requestImageFile
+            )
+
+            val imageMultipartForProduct: MultipartBody.Part = MultipartBody.Part.createFormData(
                 "image",
                 file.name,
                 requestImageFile
             )
 
-            val name = binding.edName.text.toString()
-            val price = binding.edPrice.text.toString().toIntOrNull()
-            val description = binding.edAddDescription.text.toString()
-            val clothingType = binding.edClothingType.text.toString()
+            lifecycleScope.launch {
+                uploadProductViewModel.getSession().observe(this@UploadProductActivity) { user ->
+                    if (user != null) {
+                        lifecycleScope.launch {
+                            val result = uploadProductViewModel.classifyImage("Bearer ${user.accessToken}", imageMultipartForMl)
+                            when (result) {
+                                is Result.Loading -> {
+                                    showLoading(true)
+                                }
+                                is Result.Success -> {
+                                    showLoading(false)
+                                    val mlResponse = result.data
+                                    val clothingType = mlResponse.data.type
+                                    val clothingUsage = mlResponse.data.usage
 
-            uploadProductViewModel.getSession().observe(this) { user ->
-                if (user != null) {
-                    uploadProductViewModel.uploadProduct(
-                        user.userId,
-                        imageMultipart,
-                        name,
-                        price,
-                        description,
-                        clothingType
-                    )
-                } else {
-                    showToast(getString(R.string.user_not_found))
+                                    uploadProductViewModel.uploadProduct(
+                                        user.userId,
+                                        imageMultipartForProduct,
+                                        binding.edName.text.toString(),
+                                        binding.edPrice.text.toString().toIntOrNull(),
+                                        binding.edAddDescription.text.toString(),
+                                        clothingType,
+                                        clothingUsage
+                                    )
+                                }
+                                is Result.Error -> {
+                                    showLoading(false)
+                                    showToast(result.error)
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
@@ -152,7 +178,6 @@ class UploadProductActivity : AppCompatActivity() {
                     is Result.Loading -> {
                         showLoading(true)
                     }
-
                     is Result.Success -> {
                         showLoading(false)
                         AlertDialog.Builder(this).apply {
@@ -166,13 +191,12 @@ class UploadProductActivity : AppCompatActivity() {
                             show()
                         }
                     }
-
                     is Result.Error -> {
                         showLoading(false)
+                        showToast(it.error)
                     }
                 }
             }
-
         } ?: showToast(getString(R.string.empty_image_warning))
     }
 
@@ -188,11 +212,7 @@ class UploadProductActivity : AppCompatActivity() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        binding.progressIndicator.visibility = if (isLoading) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     companion object {

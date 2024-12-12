@@ -57,6 +57,7 @@ interface ApiService {
         @Part("price") price: RequestBody?,
         @Part("description") description: RequestBody,
         @Part("clothing_type") clothingType: RequestBody,
+        @Part("clothing_usage") clothingUsage: RequestBody,
         @Header("Authorization") accessToken: String
     ): UploadProductResponse
 

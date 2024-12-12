@@ -13,11 +13,13 @@ import com.dicoding.thriftify.data.remote.request.LoginRequest
 import com.dicoding.thriftify.data.remote.request.RegisterRequest
 import com.dicoding.thriftify.data.remote.response.LoginResponse
 import com.dicoding.thriftify.data.remote.response.LogoutResponse
+import com.dicoding.thriftify.data.remote.response.MlResponse
 import com.dicoding.thriftify.data.remote.response.Product
 import com.dicoding.thriftify.data.remote.response.RegisterResponse
 import com.dicoding.thriftify.data.remote.response.UploadProductResponse
 import com.dicoding.thriftify.data.remote.response.UserResponse
 import com.dicoding.thriftify.data.remote.retrofit.ApiService
+import com.dicoding.thriftify.data.remote.retrofit.MlApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -32,7 +34,8 @@ import java.io.IOException
 class UserRepository private constructor(
     private val context: Context,
     private val userPreference: UserPreference,
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val mlApiService: MlApiService
 ) {
     fun register(registerRequest: RegisterRequest): LiveData<Result<RegisterResponse>> =
         liveData(Dispatchers.IO) {
@@ -196,6 +199,14 @@ class UserRepository private constructor(
         }
     }
 
+    suspend fun classifyImage(accessToken: String, image: MultipartBody.Part): Result<MlResponse> {
+        return try {
+            val response = mlApiService.classifyImage(accessToken, image)
+            Result.Success(response)
+        } catch (e: Exception) {
+            Result.Error(e.message.toString())
+        }
+    }
 
     fun uploadProduct(
         ownerId: String,
@@ -203,7 +214,8 @@ class UserRepository private constructor(
         name: String,
         price: Int?,
         description: String,
-        clothingType: String
+        clothingType: String,
+        clothingUsage: String
     ): LiveData<Result<UploadProductResponse>> = liveData(Dispatchers.IO) {
         emit(Result.Loading)
         try {
@@ -215,6 +227,7 @@ class UserRepository private constructor(
             val priceBody = price?.toString()?.toRequestBody("text/plain".toMediaTypeOrNull())
             val descriptionBody = description.toRequestBody("text/plain".toMediaTypeOrNull())
             val clothingTypeBody = clothingType.toRequestBody("text/plain".toMediaTypeOrNull())
+            val clothingUsageBody = clothingUsage.toRequestBody("text/plain".toMediaTypeOrNull())
 
             val response = apiService.uploadProduct(
                 ownerId = ownerIdBody,
@@ -223,6 +236,7 @@ class UserRepository private constructor(
                 price = priceBody,
                 description = descriptionBody,
                 clothingType = clothingTypeBody,
+                clothingUsage =  clothingUsageBody,
                 accessToken = accessToken
             )
 
@@ -239,6 +253,7 @@ class UserRepository private constructor(
                         val priceBody = price?.toString()?.toRequestBody("text/plain".toMediaTypeOrNull())
                         val descriptionBody = description.toRequestBody("text/plain".toMediaTypeOrNull())
                         val clothingTypeBody = clothingType.toRequestBody("text/plain".toMediaTypeOrNull())
+                        val clothingUsageBody = clothingUsage.toRequestBody("text/plain".toMediaTypeOrNull())
 
                         val retryResponse = apiService.uploadProduct(
                             ownerId = ownerIdBody,
@@ -247,6 +262,7 @@ class UserRepository private constructor(
                             price = priceBody,
                             description = descriptionBody,
                             clothingType = clothingTypeBody,
+                            clothingUsage =  clothingUsageBody,
                             accessToken = newAccessToken
                         )
                         emit(Result.Success(retryResponse))
@@ -310,10 +326,11 @@ class UserRepository private constructor(
         fun getInstance(
             context: Context,
             userPreference: UserPreference,
-            apiService: ApiService
+            apiService: ApiService,
+            mlApiService: MlApiService
         ): UserRepository =
             instance ?: synchronized(this) {
-                instance ?: UserRepository(context, userPreference, apiService)
+                instance ?: UserRepository(context, userPreference, apiService, mlApiService)
             }.also { instance = it }
     }
 

@@ -73,5 +73,8 @@
     <string name="title_detail">Detail Title</string>
     <string name="phone_hint">Prefix with country code (example: 62xxxxx)</string>
     <string name="purchase_message">Hello %1$s, I would like to purchase %2$s at the price offered on Thriftify App Rp. \"%3$d\".</string>
+    <string name="product_clothing_usage">Clothing Usage</string>
+    <string name="error_classification_failed">Error Classification Failed</string>
+    <string name="error_token_refresh_failed">Error Refresh Token Failed</string>
 
 </resources>
