@@ -18,7 +18,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "BASE_URL", "\"https://thriftify.my.id/\"")
+        buildConfigField("String", "BASE_URL", "\"https://thriftify-backend-92813266002.asia-southeast2.run.app/\"")
     }
 
     buildTypes {
